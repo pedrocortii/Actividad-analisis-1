@@ -18,6 +18,9 @@
                     <a href="{{ route('tareas.index') }}" class="btn btn-primary">
                         Ir a Tareas
                     </a>
+                    <a href="{{ route('vehiculos.index') }}" class="btn btn-primary">
+                        Ir a Vehiculos 
+                    </a>
                 </div>
             </div>
         </div>
