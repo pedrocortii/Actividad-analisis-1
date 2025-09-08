@@ -49,7 +49,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm px-3 py-1" onclick="return confirm('¿Estás seguro de eliminar este vehículo?')">
-                                                        <i class="fa-solid fa-trash"></i> Eliminar
+                                                        <i class="fa-solid fa-trash"></i> Eliminar 
                                                     </button>
                                                 </form>
                                             </div>

@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+# Rutas Tareas
+
 Route::get('/tareas', [App\Http\Controllers\TareaController::class, 'index'])
     ->name('tareas.index');
 
@@ -38,7 +40,8 @@ Route::put('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'upd
 
 Route::delete('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'destroy'])
     ->name('tareas.destroy');
-Auth::routes();
+
+# Rutas Vehiculos
 
 Route::get('/vehiculos', [App\Http\Controllers\VehiculoController::class, 'index'])
     ->name('vehiculos.index');
@@ -57,5 +60,25 @@ Route::put('/vehiculos/{vehiculo}', [App\Http\Controllers\VehiculoController::cl
 
 Route::delete('/vehiculos/{vehiculo}', [App\Http\Controllers\VehiculoController::class, 'destroy'])
     ->name('vehiculos.destroy');
+
+# Rutas Employees
+
+Route::get('/employees', [App\Http\Controllers\EmployeeController::class, 'index'])
+    ->name('employees.index');
+
+Route::get('/employees/create', [App\Http\Controllers\EmployeeController::class, 'create'])
+    ->name('employees.create');
+
+Route::post('/employees', [App\Http\Controllers\EmployeeController::class, 'store'])
+    ->name('employees.store');
+
+Route::get('/employees/{employee}/edit', [App\Http\Controllers\EmployeeController::class, 'edit'])
+    ->name('employees.edit');
+
+Route::put('/employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'update'])
+    ->name('employees.update');
+
+Route::delete('/employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'destroy'])
+    ->name('employees.destroy');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
