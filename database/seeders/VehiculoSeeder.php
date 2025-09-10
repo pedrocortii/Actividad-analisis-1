@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Vehiculo;
 
 class VehiculoSeeder extends Seeder
 {
@@ -14,6 +15,14 @@ class VehiculoSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Vehiculo::create([
+            'patente' => 'ABC123',
+            'marca' => 'Peugeot',
+            'modelo' => 'Partner',
+            'año' => 2020,
+            'foto' => '',
+            'vtv' => '2024-12-31',
+            'mobile_id' => 1
+        ]);
     }
 }

@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Models\Movil;
+use App\Models\Mobile;
 use App\Models\User;
 
-class MovilPolicy
+class MobilePolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class MovilPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Movil  $movil
+     * @param  \App\Models\Mobile  $mobile
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Movil $movil)
+    public function view(User $user, Mobile $mobile)
     {
         //
     }
@@ -48,10 +48,10 @@ class MovilPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Movil  $movil
+     * @param  \App\Models\Mobile  $mobile
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Movil $movil)
+    public function update(User $user, Mobile $mobile)
     {
         //
     }
@@ -60,10 +60,10 @@ class MovilPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Movil  $movil
+     * @param  \App\Models\Mobile  $mobile
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Movil $movil)
+    public function delete(User $user, Mobile $mobile)
     {
         //
     }
@@ -72,10 +72,10 @@ class MovilPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Movil  $movil
+     * @param  \App\Models\Mobile  $mobile
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Movil $movil)
+    public function restore(User $user, Mobile $mobile)
     {
         //
     }
@@ -84,10 +84,10 @@ class MovilPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Movil  $movil
+     * @param  \App\Models\Mobile  $mobile
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Movil $movil)
+    public function forceDelete(User $user, Mobile $mobile)
     {
         //
     }

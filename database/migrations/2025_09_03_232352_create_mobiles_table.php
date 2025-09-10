@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('moviles', function (Blueprint $table) {
+        Schema::create('mobiles', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
-            $table->string('codigo')->unique();
-            $table->string('zona_asignada');
-            $table->string('estado')->default('activo');
+            $table->string('nombre', 100);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('moviles');
+        Schema::dropIfExists('mobiles');
     }
 };

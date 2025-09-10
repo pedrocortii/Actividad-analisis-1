@@ -15,10 +15,11 @@ class Vehiculo extends Model
         'año',
         'foto',
         'vtv',
+        'mobile_id'
     ];
 
-    public function movil() 
+    public function mobile()
     {
-        return $this->belongsTo(Movil::class);
+        return $this->belongsTo(Mobile::class);
     }
 }

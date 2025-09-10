@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Movil extends Model
+class Mobile extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'Nombre',
-        'Codigo',
-        'Zona_asignada',
-        'Estado',
-    ];
+    protected $fillable = ['nombre'];
 
     public function vehiculos() 
     {
         return $this->hasMany(Vehiculo::class);
-    } 
+    }
 }
+

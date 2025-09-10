@@ -21,7 +21,7 @@ return new class extends Migration
         $table->year('año');
         $table->string('foto', 255)->nullable();
         $table->date('vtv');
-        $table->foreignId('movil_id')->nullable()->constrained();
+        $table->foreignId('mobile_id')->constrained('mobiles')->onDelete('restrict');
         $table->timestamps();
     });
     }

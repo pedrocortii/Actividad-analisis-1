@@ -237,7 +237,7 @@
               </a>
               </li>
               <li class="nav-item">
-              <a href="{{ route('movil.index') }}" class="nav-link {{ request()->routeIs('movil.*') ? 'active' : '' }}">
+              <a href="{{ route('mobiles.index') }}" class="nav-link {{ request()->routeIs('mobiles.*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Moviles</p>
               </a>

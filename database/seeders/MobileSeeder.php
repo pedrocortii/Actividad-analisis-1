@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Mobile;
 
-class MovilSeeder extends Seeder
+class MobileSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,7 @@ class MovilSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Mobile::create(['nombre' => 'Móvil 1']);
+        Mobile::create(['nombre' => 'Móvil 2']);
     }
 }

@@ -81,25 +81,22 @@ Route::put('/employees/{employee}', [App\Http\Controllers\EmployeeController::cl
 Route::delete('/employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'destroy'])
     ->name('employees.destroy');
 
+# Rutas mobile
 
-# Rutas Movil
-Route::get('/movil', [App\Http\Controllers\MovilController::class, 'index'])
-    ->name('movil.index');
+Route::get('/mobiles', [App\Http\Controllers\MobileController::class, 'index'])
+    ->name('mobiles.index');
 
-Route::get('/movil/create', [App\Http\Controllers\MovilController::class, 'create'])
-    ->name('movil.create');
+Route::get('/mobiles/create', [App\Http\Controllers\MobileController::class, 'create'])
+    ->name('mobiles.create');
 
-Route::post('/movil', [App\Http\Controllers\MovilController::class, 'store'])
-    ->name('movil.store');
+Route::post('/mobiles', [App\Http\Controllers\MobileController::class, 'store'])
+    ->name('mobiles.store');
 
-Route::get('/movil/{movil}/edit', [App\Http\Controllers\MovilController::class, 'edit'])
-    ->name('movil.edit');
+Route::get('/mobiles/{mobile}/edit', [App\Http\Controllers\MobileController::class, 'edit'])
+    ->name('mobiles.edit');
 
-Route::put('/movil/{movil}', [App\Http\Controllers\MovilController::class, 'update'])
-    ->name('movil.update');
+Route::put('/mobiles/{mobile}', [App\Http\Controllers\MobileController::class, 'update'])
+    ->name('mobiles.update');
 
-Route::delete('/movil/{movil}', [App\Http\Controllers\MovilController::class, 'destroy'])
-    ->name('movil.destroy');
-
-Route::get('/movil/asignar-vehiculo', [MovilController::class, 'asignarForm'])->name('movil.asignarForm');
-Route::post('/movil/asignar-vehiculo', [MovilController::class, 'asignarVehiculo'])->name('movil.asignarVehiculo');
+Route::delete('/mobiles/{mobile}', [App\Http\Controllers\MobileController::class, 'destroy'])
+    ->name('mobiles.destroy');

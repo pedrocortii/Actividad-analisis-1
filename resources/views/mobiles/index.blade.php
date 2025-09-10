@@ -6,9 +6,9 @@
             <div class="col-lg-10">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>{{ __('Vehículos') }}</span>
-                        <a href="{{ route('vehiculos.create') }}" class="btn btn-success btn-sm">
-                            <i class="fa-solid fa-plus"></i> Agregar vehículo
+                        <span>{{ __('Moviles') }}</span>
+                        <a href="{{ route('mobiles.create') }}" class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-plus"></i> Agregar móvil
                         </a>
                     </div>
                     <div class="card-body">
@@ -21,36 +21,23 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Patente</th>
-                                    <th>Marca</th>
-                                    <th>Modelo</th>
-                                    <th>Año</th>
-                                    <th>ID Movil</th>
-                                    <th>VTV</th>
-                                    <th>Acciones</th>
-                                    <th>Foto</th>
+                                    <th>Nombre</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($vehiculos as $vehiculo)
+                                @foreach ($mobiles as $mobile)
                                     <tr>
-                                        <td>{{ $vehiculo->id }}</td>
-                                        <td>{{ $vehiculo->patente }}</td>
-                                        <td>{{ $vehiculo->marca }}</td>
-                                        <td>{{ $vehiculo->modelo }}</td>
-                                        <td>{{ $vehiculo->año }}</td>
-                                        <td>{{ $vehiculo->mobile_id }}</td>
-                                        <td>{{ $vehiculo->foto }}</td>
-                                        <td>{{ $vehiculo->vtv }}</td>
+                                        <td>{{ $mobile->id }}</td>
+                                        <td>{{ $mobile->nombre }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
-                                                <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-warning btn-sm px-3 py-1">
+                                                <a href="{{ route('mobiles.edit', $mobile->id) }}" class="btn btn-warning btn-sm px-3 py-1">
                                                     <i class="fa-solid fa-pen-to-square"></i> Editar
                                                 </a>
-                                                <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST">
+                                                <form action="{{ route('mobiles.destroy', $mobile->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm px-3 py-1" onclick="return confirm('¿Estás seguro de eliminar este vehículo?')">
+                                                    <button type="submit" class="btn btn-danger btn-sm px-3 py-1" onclick="return confirm('¿Estás seguro de eliminar este movil?')">
                                                         <i class="fa-solid fa-trash"></i> Eliminar 
                                                     </button>
                                                 </form>
