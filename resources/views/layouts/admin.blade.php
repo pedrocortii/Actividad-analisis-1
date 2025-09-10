@@ -188,7 +188,7 @@
           <img src="dist/img/user3-128x128.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Pedrito Bustamante</a>
+          <a href="#" class="d-block">Pocho tu macho</a>
         </div>
       </div>
 
@@ -237,7 +237,7 @@
               </a>
               </li>
               <li class="nav-item">
-              <a href="#" class="nav-link {{ request()->is('moviles*') ? 'active' : '' }}">
+              <a href="{{ route('movil.index') }}" class="nav-link {{ request()->routeIs('movil.*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Moviles</p>
               </a>

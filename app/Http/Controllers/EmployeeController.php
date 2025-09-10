@@ -80,7 +80,7 @@ class EmployeeController extends Controller
      *
      * @param  \App\Http\Requests\UpdateEmployeeRequest  $request
      * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {

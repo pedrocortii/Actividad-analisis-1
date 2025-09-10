@@ -16,4 +16,9 @@ class Vehiculo extends Model
         'foto',
         'vtv',
     ];
+
+    public function movil() 
+    {
+        return $this->belongsTo(Movil::class);
+    }
 }
