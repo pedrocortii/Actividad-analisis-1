@@ -18,8 +18,8 @@ class Vehiculo extends Model
         'mobile_id'
     ];
 
-    public function mobile()
+    public function workGroup()
     {
-        return $this->belongsTo(Mobile::class);
+        return $this->hasOne(WorkGroup::class);
     }
 }

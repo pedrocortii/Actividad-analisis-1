@@ -81,22 +81,7 @@ Route::put('/employees/{employee}', [App\Http\Controllers\EmployeeController::cl
 Route::delete('/employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'destroy'])
     ->name('employees.destroy');
 
-# Rutas mobile
+# Rutas Work Groups
 
-Route::get('/mobiles', [App\Http\Controllers\MobileController::class, 'index'])
-    ->name('mobiles.index');
 
-Route::get('/mobiles/create', [App\Http\Controllers\MobileController::class, 'create'])
-    ->name('mobiles.create');
-
-Route::post('/mobiles', [App\Http\Controllers\MobileController::class, 'store'])
-    ->name('mobiles.store');
-
-Route::get('/mobiles/{mobile}/edit', [App\Http\Controllers\MobileController::class, 'edit'])
-    ->name('mobiles.edit');
-
-Route::put('/mobiles/{mobile}', [App\Http\Controllers\MobileController::class, 'update'])
-    ->name('mobiles.update');
-
-Route::delete('/mobiles/{mobile}', [App\Http\Controllers\MobileController::class, 'destroy'])
-    ->name('mobiles.destroy');
+# Rutas Work Groups Employees

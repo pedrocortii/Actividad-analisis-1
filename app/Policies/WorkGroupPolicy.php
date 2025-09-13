@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Models\Mobile;
+use App\Models\WorkGroup;
 use App\Models\User;
 
-class MobilePolicy
+class WorkGroupPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class MobilePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mobile  $mobile
+     * @param  \App\Models\WorkGroup  $workGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Mobile $mobile)
+    public function view(User $user, WorkGroup $workGroup)
     {
         //
     }
@@ -48,10 +48,10 @@ class MobilePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mobile  $mobile
+     * @param  \App\Models\WorkGroup  $workGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Mobile $mobile)
+    public function update(User $user, WorkGroup $workGroup)
     {
         //
     }
@@ -60,10 +60,10 @@ class MobilePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mobile  $mobile
+     * @param  \App\Models\WorkGroup  $workGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Mobile $mobile)
+    public function delete(User $user, WorkGroup $workGroup)
     {
         //
     }
@@ -72,10 +72,10 @@ class MobilePolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mobile  $mobile
+     * @param  \App\Models\WorkGroup  $workGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Mobile $mobile)
+    public function restore(User $user, WorkGroup $workGroup)
     {
         //
     }
@@ -84,10 +84,10 @@ class MobilePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mobile  $mobile
+     * @param  \App\Models\WorkGroup  $workGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Mobile $mobile)
+    public function forceDelete(User $user, WorkGroup $workGroup)
     {
         //
     }

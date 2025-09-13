@@ -20,4 +20,9 @@ class Employee extends Model
         'fecha_contratacion',
         'estado'
     ];
+
+    public function workGroups()
+    {
+        return $this->belongsToMany(WorkGroup::class, 'work_group_employees');
+    }
 }

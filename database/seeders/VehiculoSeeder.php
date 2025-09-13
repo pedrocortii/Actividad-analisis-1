@@ -21,8 +21,7 @@ class VehiculoSeeder extends Seeder
             'modelo' => 'Partner',
             'año' => 2020,
             'foto' => '',
-            'vtv' => '2024-12-31',
-            'mobile_id' => 1
+            'vtv' => '2024-12-31'
         ]);
     }
 }
