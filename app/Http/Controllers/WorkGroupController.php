@@ -15,11 +15,10 @@ class WorkGroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $workGroups = WorkGroup::with(['employees', 'vehiculo'])->get();
-        return response()->json($workGroups);
+{
+    $workGroups = WorkGroup::with('employees')->paginate(10);
+    return view('work_groups.index', compact('workGroups'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -27,8 +26,10 @@ class WorkGroupController extends Controller
      */
     public function create()
     {
-    
-    }
+    $vehiculos = \App\Models\Vehiculo::all();
+    $employees = \App\Models\Employee::all();
+    return view('work_groups.create', compact('vehiculos', 'employees'));
+}
 
     /**
      * Store a newly created resource in storage.
@@ -38,15 +39,17 @@ class WorkGroupController extends Controller
      */
     public function store(StoreWorkGroupRequest $request)
     {
+        //dd($request->all());
         $workGroup = WorkGroup::create([
             'name' => $request->name,
             'vehiculo_id' => $request->vehiculo_id,
         ]);
 
         $workGroup->employees()->attach($request->employee_ids);
-
         
-        return response()->json($workGroup->load('employees', 'vehiculo'));
+        $workGroup->save();
+        
+        return redirect()->route('work-groups.index')->with('success', 'Grupo de trabajo creado exitosamente.');
     }
     /**
      * Display the specified resource.
@@ -67,7 +70,9 @@ class WorkGroupController extends Controller
      */
     public function edit(WorkGroup $workGroup)
     {
-        //
+        $vehiculos = \App\Models\Vehiculo::all();
+        $employees = \App\Models\Employee::all();
+        return view('work_groups.edit', compact('workGroup', 'vehiculos', 'employees'));
     }
 
     /**
@@ -101,6 +106,6 @@ class WorkGroupController extends Controller
     public function destroy(WorkGroup $workGroup)
     {
         $workGroup->delete();
-        return response()->json(['message' => 'Grupo de trabajo eliminado']);
+        return redirect()->route('work-groups.index')->with('success', 'Grupo de trabajo eliminado exitosamente.');
     }
 }

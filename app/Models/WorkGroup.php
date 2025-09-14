@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Vehiculo;
+use App\Models\Employee;
 
 class WorkGroup extends Model
 {
     use HasFactory;
     protected $fillable = [
         'name', 
-        'vehicle_id'
+        'vehiculo_id'
     ];
 
     public function vehiculo()

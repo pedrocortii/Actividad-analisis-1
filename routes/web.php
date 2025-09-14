@@ -83,5 +83,43 @@ Route::delete('/employees/{employee}', [App\Http\Controllers\EmployeeController:
 
 # Rutas Work Groups
 
+Route::get('/work-groups', [App\Http\Controllers\WorkGroupController::class, 'index'])
+    ->name('work-groups.index');
+
+Route::get('/work-groups/create', [App\Http\Controllers\WorkGroupController::class, 'create'])
+    ->name('work-groups.create');
+
+Route::post('/work-groups', [App\Http\Controllers\WorkGroupController::class, 'store'])
+    ->name('work-groups.store');
+
+Route::get('/work-groups/{workGroup}/edit', [App\Http\Controllers\WorkGroupController::class, 'edit'])
+    ->name('work-groups.edit');
+
+Route::put('/work-groups/{workGroup}', [App\Http\Controllers\WorkGroupController::class, 'update'])
+    ->name('work-groups.update');
+
+Route::delete('/work-groups/{workGroup}', [App\Http\Controllers\WorkGroupController::class, 'destroy'])
+    ->name('work-groups.destroy');
+
+Route::get('/work-groups/{workGroup}', [App\Http\Controllers\WorkGroupController::class, 'show'])
+    ->name('work-groups.show');
 
 # Rutas Work Groups Employees
+
+Route::get('/work-group-employees', [App\Http\Controllers\WorkGroupEmployeeController::class, 'index'])
+    ->name('work-group-employees.index');
+
+Route::get('/work-group-employees/create', [App\Http\Controllers\WorkGroupEmployeeController::class, 'create'])
+    ->name('work-group-employees.create');
+
+Route::post('/work-group-employees', [App\Http\Controllers\WorkGroupEmployeeController::class, 'store'])    
+    ->name('work-group-employees.store');
+
+Route::get('/work-group-employees/{workGroupEmployee}/edit', [App\Http\Controllers\WorkGroupEmployeeController::class, 'edit'])
+    ->name('work-group-employees.edit');
+
+Route::put('/work-group-employees/{workGroupEmployee}', [App\Http\Controllers\WorkGroupEmployeeController::class, 'update'])
+    ->name('work-group-employees.update');
+
+Route::delete('/work-group-employees/{workGroupEmployee}', [App\Http\Controllers\WorkGroupEmployeeController::class, 'destroy'])
+    ->name('work-group-employees.destroy');

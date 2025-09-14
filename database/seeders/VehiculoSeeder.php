@@ -23,5 +23,14 @@ class VehiculoSeeder extends Seeder
             'foto' => '',
             'vtv' => '2024-12-31'
         ]);
+
+        Vehiculo::create([
+            'patente' => 'XYZ789',
+            'marca' => 'Ford',
+            'modelo' => 'Focus',
+            'año' => 2021,
+            'foto' => '',
+            'vtv' => '2024-12-01',
+        ]);
     }
 }

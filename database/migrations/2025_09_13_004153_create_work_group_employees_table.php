@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('work_group_employees', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('work_group_id')->constrained('work_groups');
-            $table->foreignId('employee_id')->constrained('employees');
-            $table->timestamps();
-        });
+    Schema::create('work_group_employees', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('work_group_id');
+        $table->unsignedBigInteger('employee_id');
+        $table->timestamps();
+
+        $table->foreign('work_group_id')->references('id')->on('work_groups')->onDelete('cascade');
+        $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
+    });
     }
 
     /**

@@ -14,11 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('work_groups', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('vehicle_id')->constrained('vehiculos');
-            $table->timestamps();
-        });
+        $table->id();
+        $table->string('name');
+        $table->unsignedBigInteger('vehiculo_id')->nullable();
+        $table->timestamps();
+
+        $table->foreign('vehiculo_id')->references('id')->on('vehiculos')->onDelete('cascade');
+    });
     }
 
     /**

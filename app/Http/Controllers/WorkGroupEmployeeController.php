@@ -14,9 +14,10 @@ class WorkGroupEmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //listar todas las relaciones
     public function index()
     {
-        //
+        return response()->json(WorkGroupEmployee::all());
     }
 
     /**
@@ -24,6 +25,7 @@ class WorkGroupEmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function create()
     {
         //
@@ -35,9 +37,15 @@ class WorkGroupEmployeeController extends Controller
      * @param  \App\Http\Requests\StoreWorkGroupEmployeeRequest  $request
      * @return \Illuminate\Http\Response
      */
+
+    //crear una nueva relacion
     public function store(StoreWorkGroupEmployeeRequest $request)
     {
-        //
+        $relation = WorkGroupEmployee::create([
+            'work_group_id' => $request->work_group_id,
+            'employee_id' => $request->employee_id,
+        ]);
+        return response()->json($relation, 201);
     }
 
     /**
@@ -46,9 +54,11 @@ class WorkGroupEmployeeController extends Controller
      * @param  \App\Models\WorkGroupEmployee  $workGroupEmployee
      * @return \Illuminate\Http\Response
      */
+
+    //mostrar una relacion especifica
     public function show(WorkGroupEmployee $workGroupEmployee)
     {
-        //
+        return response()->json($workGroupEmployee);
     }
 
     /**
@@ -57,6 +67,8 @@ class WorkGroupEmployeeController extends Controller
      * @param  \App\Models\WorkGroupEmployee  $workGroupEmployee
      * @return \Illuminate\Http\Response
      */
+
+
     public function edit(WorkGroupEmployee $workGroupEmployee)
     {
         //
@@ -69,9 +81,11 @@ class WorkGroupEmployeeController extends Controller
      * @param  \App\Models\WorkGroupEmployee  $workGroupEmployee
      * @return \Illuminate\Http\Response
      */
+    //actualizar una relacion
     public function update(UpdateWorkGroupEmployeeRequest $request, WorkGroupEmployee $workGroupEmployee)
     {
-        //
+        $workGroupEmployee->update($request->all());
+        return response()->json($workGroupEmployee);
     }
 
     /**
@@ -80,8 +94,11 @@ class WorkGroupEmployeeController extends Controller
      * @param  \App\Models\WorkGroupEmployee  $workGroupEmployee
      * @return \Illuminate\Http\Response
      */
+
+    //Eliminamos una relacion
     public function destroy(WorkGroupEmployee $workGroupEmployee)
     {
-        //
+        $workGroupEmployee->delete();
+        return response()->json(['message' => 'Relación eliminada']);
     }
 }
