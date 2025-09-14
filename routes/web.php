@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+# Rutas Tareas
+
 Route::get('/tareas', [App\Http\Controllers\TareaController::class, 'index'])
     ->name('tareas.index');
 
@@ -38,6 +40,86 @@ Route::put('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'upd
 
 Route::delete('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'destroy'])
     ->name('tareas.destroy');
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+# Rutas Vehiculos
+
+Route::get('/vehiculos', [App\Http\Controllers\VehiculoController::class, 'index'])
+    ->name('vehiculos.index');
+
+Route::get('/vehiculos/create', [App\Http\Controllers\VehiculoController::class, 'create'])
+    ->name('vehiculos.create');
+
+Route::post('/vehiculos', [App\Http\Controllers\VehiculoController::class, 'store'])
+    ->name('vehiculos.store');
+
+Route::get('/vehiculos/{vehiculo}/edit', [App\Http\Controllers\VehiculoController::class, 'edit'])
+    ->name('vehiculos.edit');
+
+Route::put('/vehiculos/{vehiculo}', [App\Http\Controllers\VehiculoController::class, 'update'])
+    ->name('vehiculos.update');
+
+Route::delete('/vehiculos/{vehiculo}', [App\Http\Controllers\VehiculoController::class, 'destroy'])
+    ->name('vehiculos.destroy');
+
+# Rutas Employees
+
+Route::get('/employees', [App\Http\Controllers\EmployeeController::class, 'index'])
+    ->name('employees.index');
+
+Route::get('/employees/create', [App\Http\Controllers\EmployeeController::class, 'create'])
+    ->name('employees.create');
+
+Route::post('/employees', [App\Http\Controllers\EmployeeController::class, 'store'])
+    ->name('employees.store');
+
+Route::get('/employees/{employee}/edit', [App\Http\Controllers\EmployeeController::class, 'edit'])
+    ->name('employees.edit');
+
+Route::put('/employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'update'])
+    ->name('employees.update');
+
+Route::delete('/employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'destroy'])
+    ->name('employees.destroy');
+
+# Rutas Work Groups
+
+Route::get('/work-groups', [App\Http\Controllers\WorkGroupController::class, 'index'])
+    ->name('work-groups.index');
+
+Route::get('/work-groups/create', [App\Http\Controllers\WorkGroupController::class, 'create'])
+    ->name('work-groups.create');
+
+Route::post('/work-groups', [App\Http\Controllers\WorkGroupController::class, 'store'])
+    ->name('work-groups.store');
+
+Route::get('/work-groups/{workGroup}/edit', [App\Http\Controllers\WorkGroupController::class, 'edit'])
+    ->name('work-groups.edit');
+
+Route::put('/work-groups/{workGroup}', [App\Http\Controllers\WorkGroupController::class, 'update'])
+    ->name('work-groups.update');
+
+Route::delete('/work-groups/{workGroup}', [App\Http\Controllers\WorkGroupController::class, 'destroy'])
+    ->name('work-groups.destroy');
+
+Route::get('/work-groups/{workGroup}', [App\Http\Controllers\WorkGroupController::class, 'show'])
+    ->name('work-groups.show');
+
+# Rutas Work Groups Employees
+
+Route::get('/work-group-employees', [App\Http\Controllers\WorkGroupEmployeeController::class, 'index'])
+    ->name('work-group-employees.index');
+
+Route::get('/work-group-employees/create', [App\Http\Controllers\WorkGroupEmployeeController::class, 'create'])
+    ->name('work-group-employees.create');
+
+Route::post('/work-group-employees', [App\Http\Controllers\WorkGroupEmployeeController::class, 'store'])    
+    ->name('work-group-employees.store');
+
+Route::get('/work-group-employees/{workGroupEmployee}/edit', [App\Http\Controllers\WorkGroupEmployeeController::class, 'edit'])
+    ->name('work-group-employees.edit');
+
+Route::put('/work-group-employees/{workGroupEmployee}', [App\Http\Controllers\WorkGroupEmployeeController::class, 'update'])
+    ->name('work-group-employees.update');
+
+Route::delete('/work-group-employees/{workGroupEmployee}', [App\Http\Controllers\WorkGroupEmployeeController::class, 'destroy'])
+    ->name('work-group-employees.destroy');
