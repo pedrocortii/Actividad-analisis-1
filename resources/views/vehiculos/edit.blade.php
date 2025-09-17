@@ -24,7 +24,7 @@
     <input type="number" name="año" id="año" class="form-control" value="{{ old('año', $vehiculo->año) }}">
 
     <label for="foto" class="form-label">Foto del vehiculo</label>
-    <input type="file" name="foto" id="foto" class="form-control" value="{{ old('foto', $vehiculo->foto) }}">
+    <input type="file" name="foto" id="foto" class="form-control-file" value="{{ old('foto', $vehiculo->foto) }}" accept="images/">
 
     <label for="vtv" class="form-label">VTV del vehiculo</label>
     <input type="date" name="vtv" id="vtv" class="form-control" value="{{ old('vtv', $vehiculo->vtv) }}">

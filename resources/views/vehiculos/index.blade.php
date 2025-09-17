@@ -4,22 +4,22 @@
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Vehículos</h4>
-                    <a href="{{ route('vehiculos.create') }}" class="btn btn-success btn-sm" title="Agregar vehículo">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top">
+                    <h4 class="mb-0 fw-semibold">Vehículos</h4>
+                    <a href="{{ route('vehiculos.create') }}" class="btn btn-outline-light btn-sm" title="Agregar vehículo">
                         <i class="fa-solid fa-plus"></i> Nuevo
                     </a>
                 </div>
-                <div class="card-body bg-light">
+                <div class="card-body bg-white">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success mb-3" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover align-middle">
-                            <thead class="table-dark">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
                                 <tr>
                                     <th>ID</th>
                                     <th>Patente</th>
@@ -35,21 +35,23 @@
                                 @foreach ($vehiculos as $vehiculo)
                                     <tr>
                                         <td>{{ $vehiculo->id }}</td>
-                                        <td class="fw-bold text-info">{{ $vehiculo->patente }}</td>
+                                        <td class="fw-bold text-dark">{{ $vehiculo->patente }}</td>
                                         <td>{{ $vehiculo->marca }}</td>
                                         <td>{{ $vehiculo->modelo }}</td>
                                         <td>{{ $vehiculo->año }}</td>
-                                        <td>{{ $vehiculo->vtv }}</td>
+                                        <td>
+                                            {{ $vehiculo->vtv }}
+                                        </td>
                                         <td>
                                             @if($vehiculo->foto)
-                                                <img src="{{ asset('storage/' . $vehiculo->foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 70px;">
+                                                <img src="{{ asset('images/vehiculo' . $vehiculo->foto) }}" alt="Foto" class="img-thumbnail" style="max-width: 70px; border-radius: 6px;">
                                             @else
-                                                <span class="text-muted">Sin foto</span>
+                                                <span class="text-muted fst-italic">Sin foto</span>
                                             @endif
                                         </td>
                                         <td class="text-end">
                                             <div class="d-inline-flex gap-1">
-                                                <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-outline-warning btn-sm" title="Editar">
+                                                <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-outline-primary btn-sm" title="Editar">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST" class="d-inline">
@@ -65,10 +67,13 @@
                                 @endforeach
                             </tbody>
                         </table>
+
                         {{-- Si tienes paginación --}}
-                        {{-- <div class="d-flex justify-content-center mt-3">
+                        {{-- 
+                        <div class="d-flex justify-content-center mt-3">
                             {{ $vehiculos->links() }}
-                        </div> --}}
+                        </div> 
+                        --}}
                     </div>
                 </div>
             </div>
@@ -76,3 +81,15 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+    .badge {
+        font-size: 0.8em;
+        padding: 0.3em 0.55em;
+    }
+</style>
+@endpush

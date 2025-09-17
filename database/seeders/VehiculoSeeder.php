@@ -20,7 +20,7 @@ class VehiculoSeeder extends Seeder
             'marca' => 'Peugeot',
             'modelo' => 'Partner',
             'año' => 2020,
-            'foto' => '',
+            'foto' => NULL,
             'vtv' => '2024-12-31'
         ]);
 
@@ -29,7 +29,7 @@ class VehiculoSeeder extends Seeder
             'marca' => 'Ford',
             'modelo' => 'Focus',
             'año' => 2021,
-            'foto' => '',
+            'foto' => NULL,
             'vtv' => '2024-12-01',
         ]);
     }
