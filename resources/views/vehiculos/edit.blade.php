@@ -14,9 +14,16 @@
     <label for="patente" class="form-label">Patente del vehiculo</label>
     <input type="text" name="patente" id="patente" class="form-control" value="{{ old('patente', $vehiculo->patente) }}">
 
-    <label for="marca" class="form-label">Marca del vehiculo</label>
-    <input type="text" name="marca" id="marca" class="form-control" value="{{ old('marca', $vehiculo->marca) }}">
-
+    <label for="marca_vehiculo_id">Marca</label>
+                            <select class="form-control" id="marca_vehiculo_id" name="marca_vehiculo_id" required>
+                                <option value="" disabled selected>Seleccione una marca</option>
+                                @foreach($marcas as $marca)
+                                    <option value="{{ $marca->id }}">
+                                        {{ old('marca_vehiculo_id', $vehiculo->marca_vehiculo_id ?? '') == $marca->id ? 'selected' : '' }}>
+                                        {{ $marca->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
     <label for="modelo" class="form-label">Modelo del vehiculo</label>
     <input type="text" name="modelo" id="modelo" class="form-control" value="{{ old('modelo', $vehiculo->modelo) }}">
 
@@ -24,7 +31,7 @@
     <input type="number" name="año" id="año" class="form-control" value="{{ old('año', $vehiculo->año) }}">
 
     <label for="foto" class="form-label">Foto del vehiculo</label>
-    <input type="file" name="foto" id="foto" class="form-control" value="{{ old('foto', $vehiculo->foto) }}">
+    <input type="file" name="foto" id="foto" class="form-control-file" value="{{ old('foto', $vehiculo->foto) }}" accept="images/">
 
     <label for="vtv" class="form-label">VTV del vehiculo</label>
     <input type="date" name="vtv" id="vtv" class="form-control" value="{{ old('vtv', $vehiculo->vtv) }}">

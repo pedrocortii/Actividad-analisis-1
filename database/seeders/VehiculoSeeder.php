@@ -17,19 +17,19 @@ class VehiculoSeeder extends Seeder
     {
         Vehiculo::create([
             'patente' => 'ABC123',
-            'marca' => 'Peugeot',
+            'marca_vehiculo_id' => 1,
             'modelo' => 'Partner',
             'año' => 2020,
-            'foto' => '',
+            'foto' => NULL,
             'vtv' => '2024-12-31'
         ]);
 
         Vehiculo::create([
             'patente' => 'XYZ789',
-            'marca' => 'Ford',
+            'marca_vehiculo_id' => 2,
             'modelo' => 'Focus',
             'año' => 2021,
-            'foto' => '',
+            'foto' => NULL,
             'vtv' => '2024-12-01',
         ]);
     }

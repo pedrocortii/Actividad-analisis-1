@@ -16,12 +16,14 @@ return new class extends Migration
         Schema::create('vehiculos', function (Blueprint $table) {
         $table->id();
         $table->string('patente', 10)->unique();
-        $table->string('marca', 100);
+        $table->unsignedBigInteger('marca_vehiculo_id');
         $table->string('modelo', 100);
         $table->year('año');
         $table->string('foto', 255)->nullable();
         $table->date('vtv');
         $table->timestamps();
+
+        $table->foreign('marca_vehiculo_id')->references('id')->on('marca_vehiculos')->onDelete('cascade');
     });
     }
 

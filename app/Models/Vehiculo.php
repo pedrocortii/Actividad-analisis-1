@@ -11,7 +11,7 @@ class Vehiculo extends Model
     use HasFactory;
     protected $fillable = [
         'patente',
-        'marca',
+        'marca_vehiculo_id',
         'modelo',
         'año',
         'foto',
@@ -22,5 +22,15 @@ class Vehiculo extends Model
     public function workGroup()
     {
         return $this->hasOne(WorkGroup::class);
+    }
+
+    public function marca()
+    {
+        return $this->belongsTo(MarcaVehiculo::class, 'marca_vehiculo_id');
+    }
+
+    public function setPatenteAttribute($value)
+    {
+        $this->attributes['patente'] = strtoupper(str_replace(' ', '', $value));
     }
 }
