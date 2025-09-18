@@ -13,8 +13,16 @@
                         <div class="form-group">
                             <label for="Patente">Patente</label>
                             <input type="text" class="form-control" id="patente" name="patente" required>
-                            <label for="Marca">Marca</label>
-                            <input type="text" class="form-control" id="marca" name="marca" required>
+                            <label for="marca_vehiculo_id">Marca</label>
+                            <select class="form-control" id="marca_vehiculo_id" name="marca_vehiculo_id" required>
+                                <option value="" disabled selected>Seleccione una marca</option>
+                                @foreach($marcas as $marca)
+                                    <option value="{{ $marca->id }}">
+                                        {{ old('marca_vehiculo_id', $vehiculo->marca_vehiculo_id ?? '') == $marca->id ? 'selected' : '' }}>
+                                        {{ $marca->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
                             <label for="Modelo">Modelo</label>
                             <input type="text" class="form-control" id="modelo" name="modelo" required>
                             <label for="Año">Año</label>

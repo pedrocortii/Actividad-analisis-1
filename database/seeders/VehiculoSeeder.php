@@ -17,7 +17,7 @@ class VehiculoSeeder extends Seeder
     {
         Vehiculo::create([
             'patente' => 'ABC123',
-            'marca' => 'Peugeot',
+            'marca_vehiculo_id' => 1,
             'modelo' => 'Partner',
             'año' => 2020,
             'foto' => NULL,
@@ -26,7 +26,7 @@ class VehiculoSeeder extends Seeder
 
         Vehiculo::create([
             'patente' => 'XYZ789',
-            'marca' => 'Ford',
+            'marca_vehiculo_id' => 2,
             'modelo' => 'Focus',
             'año' => 2021,
             'foto' => NULL,

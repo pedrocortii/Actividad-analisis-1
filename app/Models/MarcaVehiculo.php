@@ -9,4 +9,9 @@ class MarcaVehiculo extends Model
 {
     use HasFactory;
     protected $fillable = ['nombre'];
+
+    public function vehiculos()
+    {
+        return $this->hasMany(Vehiculo::class, 'marca_vehiculo_id');
+    }
 }

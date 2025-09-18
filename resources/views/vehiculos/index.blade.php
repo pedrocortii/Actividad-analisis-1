@@ -36,7 +36,7 @@
                                     <tr>
                                         <td>{{ $vehiculo->id }}</td>
                                         <td class="fw-bold text-dark">{{ $vehiculo->patente }}</td>
-                                        <td>{{ $vehiculo->marca }}</td>
+                                        <td>{{ $vehiculo->marca->nombre ?? 'Sin marca' }}</td>
                                         <td>{{ $vehiculo->modelo }}</td>
                                         <td>{{ $vehiculo->año }}</td>
                                         <td>

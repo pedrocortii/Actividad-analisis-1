@@ -14,9 +14,16 @@
     <label for="patente" class="form-label">Patente del vehiculo</label>
     <input type="text" name="patente" id="patente" class="form-control" value="{{ old('patente', $vehiculo->patente) }}">
 
-    <label for="marca" class="form-label">Marca del vehiculo</label>
-    <input type="text" name="marca" id="marca" class="form-control" value="{{ old('marca', $vehiculo->marca) }}">
-
+    <label for="marca_vehiculo_id">Marca</label>
+                            <select class="form-control" id="marca_vehiculo_id" name="marca_vehiculo_id" required>
+                                <option value="" disabled selected>Seleccione una marca</option>
+                                @foreach($marcas as $marca)
+                                    <option value="{{ $marca->id }}">
+                                        {{ old('marca_vehiculo_id', $vehiculo->marca_vehiculo_id ?? '') == $marca->id ? 'selected' : '' }}>
+                                        {{ $marca->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
     <label for="modelo" class="form-label">Modelo del vehiculo</label>
     <input type="text" name="modelo" id="modelo" class="form-control" value="{{ old('modelo', $vehiculo->modelo) }}">
 

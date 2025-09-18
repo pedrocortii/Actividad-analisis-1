@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVehiculoRequest;
 use App\Http\Requests\UpdateVehiculoRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Models\MarcaVehiculo;
 
 class VehiculoController extends Controller
 {
@@ -28,7 +29,8 @@ class VehiculoController extends Controller
      */
     public function create()
     {
-        return view ('vehiculos.create');
+        $marcas = MarcaVehiculo::all();
+        return view ('vehiculos.create', compact('marcas'));
     }
 
     /**
@@ -42,7 +44,7 @@ class VehiculoController extends Controller
     {
         $vehiculo = new Vehiculo();
         $vehiculo->patente = $request->input('patente');
-        $vehiculo->marca = $request->input('marca');
+        $vehiculo->marca_vehiculo_id = $request->input('marca_vehiculo_id');
         $vehiculo->modelo = $request->input('modelo');
         $vehiculo->año = $request->input('año');
         $vehiculo->vtv = $request->input('vtv');
@@ -79,7 +81,8 @@ class VehiculoController extends Controller
     public function edit(Vehiculo $vehiculo)
     {
         $vehiculo = Vehiculo::find($vehiculo->id);
-        return view('vehiculos.edit', compact('vehiculo'));
+        $marcas = MarcaVehiculo::all();
+        return view('vehiculos.edit', compact('vehiculo', 'marcas'));
     }
 
     /**
@@ -92,7 +95,7 @@ class VehiculoController extends Controller
     public function update(UpdateVehiculoRequest $request, Vehiculo $vehiculo)
     {
         $vehiculo->patente = $request->input('patente');
-        $vehiculo->marca = $request->input('marca');
+        $vehiculo->marca_vehiculo_id = $request->input('marca_vehiculo_id');
         $vehiculo->modelo = $request->input('modelo');
         $vehiculo->año = $request->input('año');
         $vehiculo->foto = $request->input('foto');
