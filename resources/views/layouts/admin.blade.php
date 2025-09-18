@@ -250,6 +250,12 @@
                 <p>Pedidos</p>
               </a>
               </li>
+              <li class="nav-item">     
+              <a href="{{ route('marcaVehiculos.index') }}" class="nav-link {{ request()->routeIs('marcaVehiculos.*') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Marca de vehiculos</p>
+              </a>
+              </li>
             </ul>
           </li>
     

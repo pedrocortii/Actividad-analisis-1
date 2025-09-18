@@ -123,3 +123,24 @@ Route::put('/work-group-employees/{workGroupEmployee}', [App\Http\Controllers\Wo
 
 Route::delete('/work-group-employees/{workGroupEmployee}', [App\Http\Controllers\WorkGroupEmployeeController::class, 'destroy'])
     ->name('work-group-employees.destroy');
+
+# Rutas Marca Vehiculos
+
+Route::get('/marcaVehiculos', [App\Http\Controllers\MarcaVehiculoController::class, 'index'])
+    ->name('marcaVehiculos.index');
+
+Route::get('/marcaVehiculos/create', [App\Http\Controllers\MarcaVehiculoController::class, 'create'])
+    ->name('marcaVehiculos.create');
+
+Route::post('/marcaVehiculos', [App\Http\Controllers\MarcaVehiculoController::class, 'store'])
+    ->name('marcaVehiculos.store');
+
+Route::get('/marcaVehiculos/{marcaVehiculo}/edit', [App\Http\Controllers\MarcaVehiculoController::class, 'edit'])
+    ->name('marcaVehiculo.edit');
+
+Route::put('/marcaVehiculos/{marcaVehiculo}', [App\Http\Controllers\MarcaVehiculoController::class, 'update'])
+    ->name('marcaVehiculos.update');
+
+Route::delete('/marcaVehiculos/{marcaVehiculo}', [App\Http\Controllers\MarcaVehiculoController::class, 'destroy'])
+    ->name('marcaVehiculo.destroy');
+

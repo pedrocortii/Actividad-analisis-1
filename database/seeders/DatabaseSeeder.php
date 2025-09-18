@@ -9,6 +9,7 @@ use Database\Seeders\VehiculoSeeder;
 use Database\Seeders\EmployeeSeeder;
 use Database\Seeders\WorkGroupSeeder;
 use Database\Seeders\WorkGroupEmployeeSeeder;
+use Database\Seeders\MarcaVehiculoSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployeeSeeder::class);
         $this->call(WorkGroupSeeder::class);
         $this->call(WorkGroupEmployeeSeeder::class);
+        $this->call(MarcaVehiculoSeeder::class);
     }
 }
