@@ -10,6 +10,7 @@ use Database\Seeders\EmployeeSeeder;
 use Database\Seeders\WorkGroupSeeder;
 use Database\Seeders\WorkGroupEmployeeSeeder;
 use Database\Seeders\MarcaVehiculoSeeder;
+use Database\Seeders\SkillSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TareaSeeder::class);
         $this->call(MarcaVehiculoSeeder::class);
         $this->call(VehiculoSeeder::class);
+        $this->call(SkillSeeder::class);
         $this->call(EmployeeSeeder::class);
         $this->call(WorkGroupSeeder::class);
         $this->call(WorkGroupEmployeeSeeder::class);

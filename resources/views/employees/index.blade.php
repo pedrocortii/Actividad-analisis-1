@@ -36,6 +36,9 @@
                                 </p>
                                 <p class="mb-1"><strong>Fecha de contratación:</strong> {{ $employee->fecha_contratacion }}</p>
                                 <p class="mb-1"><strong>Dirección:</strong> {{ $employee->direccion }}</p>
+                                @foreach($employee->skills as $skill)
+                                    <span class="badge bg-info text-dark">{{ $skill->nombre }}</span>
+                                @endforeach
                             </div>
                             <div class="mt-3 d-flex gap-2">
                                 <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-outline-primary btn-sm flex-fill">

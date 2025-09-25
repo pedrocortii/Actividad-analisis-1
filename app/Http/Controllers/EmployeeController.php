@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Models\Skill;
 
 class EmployeeController extends Controller
 {
@@ -25,10 +26,11 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('employees.create');
-    }
+public function create()
+{
+    $skills = Skill::all();
+    return view('employees.create', compact('skills'));
+}
 
     /**
      * Store a newly created resource in storage.
@@ -37,21 +39,19 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreEmployeeRequest $request)
-    {
-        $employee = new Employee();
-        $employee->nombre = $request->input('nombre');
-        $employee->apellido = $request->input('apellido');
-        $employee->dni = $request->input('dni');
-        $employee->telefono = $request->input('telefono');
-        $employee->email = $request->input('email');
-        $employee->direccion = $request->input('direccion');
-        $employee->rol = $request->input('rol');
-        $employee->licencia_conducir = $request->input('licencia_conducir');
-        $employee->fecha_contratacion = $request->input('fecha_contratacion');
-        $employee->estado = $request->input('estado');
-        $employee->save();
-        return redirect()->route('employees.index')->with('success', 'Empleado creado exitosamente.');
+{
+    $employee = Employee::create($request->only([
+        'nombre', 'apellido', 'dni', 'telefono', 'email', 'direccion', 
+        'rol', 'licencia_conducir', 'fecha_contratacion', 'estado'
+    ]));
+
+    // Asignar skills si vienen en el request
+    if ($request->has('skills')) {
+        $employee->skills()->sync($request->skills); 
     }
+
+    return redirect()->route('employees.index')->with('success', 'Empleado creado exitosamente.');
+}
 
     /**
      * Display the specified resource.
@@ -71,9 +71,10 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Employee $employee)
-    {
-        return view('employees.edit', compact('employee'));
-    }
+{
+    $skills = Skill::all();
+    return view('employees.edit', compact('employee', 'skills'));
+}
 
     /**
      * Update the specified resource in storage.
@@ -83,20 +84,18 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response 
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
-    {
-        $employee->nombre = $request->input('nombre');
-        $employee->apellido = $request->input('apellido');
-        $employee->dni = $request->input('dni');
-        $employee->telefono = $request->input('telefono');
-        $employee->email = $request->input('email');
-        $employee->direccion = $request->input('direccion');
-        $employee->rol = $request->input('rol');
-        $employee->licencia_conducir = $request->input('licencia_conducir');
-        $employee->fecha_contratacion = $request->input('fecha_contratacion');
-        $employee->estado = $request->input('estado');
-        $employee->save();
-        return redirect()->route('employees.index')->with('success', 'Empleado actualizado exitosamente.');
+{
+    $employee->update($request->only([
+        'nombre', 'apellido', 'dni', 'telefono', 'email', 'direccion', 
+        'rol', 'licencia_conducir', 'fecha_contratacion', 'estado'
+    ]));
+
+    if ($request->has('skills')) {
+        $employee->skills()->sync($request->skills);
     }
+
+    return redirect()->route('employees.index')->with('success', 'Empleado actualizado exitosamente.');
+}
 
     /**
      * Remove the specified resource from storage.

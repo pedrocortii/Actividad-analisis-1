@@ -144,3 +144,23 @@ Route::put('/marcaVehiculos/{marcaVehiculo}', [App\Http\Controllers\MarcaVehicul
 Route::delete('/marcaVehiculos/{marcaVehiculo}', [App\Http\Controllers\MarcaVehiculoController::class, 'destroy'])
     ->name('marcaVehiculo.destroy');
 
+# Rutas Skills
+
+Route::get('/skills', [App\Http\Controllers\SkillController::class, 'index'])
+    ->name('skills.index');
+
+Route::get('/skills/create', [App\Http\Controllers\SkillController::class, 'create'])
+    ->name('skills.create');
+
+Route::post('/skills', [App\Http\Controllers\SkillController::class, 'store'])
+    ->name('skills.store');
+
+Route::get('/skills/{skill}/edit', [App\Http\Controllers\SkillController::class, 'edit'])
+    ->name('skills.edit');
+
+Route::put('/skills/{skill}', [App\Http\Controllers\SkillController::class, 'update'])
+    ->name('skills.update');
+
+Route::delete('/skills/{skill}', [App\Http\Controllers\SkillController::class, 'destroy'])
+    ->name('skills.destroy');
+

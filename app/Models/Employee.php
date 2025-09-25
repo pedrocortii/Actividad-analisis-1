@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\WorkGroup;
+use App\Models\Skill;
 
 class Employee extends Model
 {
@@ -25,5 +26,10 @@ class Employee extends Model
     public function workGroups()
     {
         return $this->belongsToMany(WorkGroup::class, 'work_group_employees');
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class);
     }
 }
