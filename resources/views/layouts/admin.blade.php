@@ -210,7 +210,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+              with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -260,6 +260,12 @@
               <a href="{{ route('marcaVehiculos.index') }}" class="nav-link {{ request()->routeIs('marcaVehiculos.*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Marca de vehiculos</p>
+              </a>
+              </li>
+              <li class="nav-item">     
+              <a href="{{ route('tareas.index') }}" class="nav-link {{ request()->routeIs('tareas.*') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tareas</p>
               </a>
               </li>
             </ul>

@@ -24,22 +24,28 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 # Rutas Tareas
 
 Route::get('/tareas', [App\Http\Controllers\TareaController::class, 'index'])
-    ->name('tareas.index');
+    ->name('tareas.index')
+    ->middleware('permission:ver tareas');
 
 Route::get('/tareas/create', [App\Http\Controllers\TareaController::class, 'create'])
-    ->name('tareas.create');
+    ->name('tareas.create')
+    ->middleware('permission:crear tareas');
 
 Route::post('/tareas', [App\Http\Controllers\TareaController::class, 'store'])
-    ->name('tareas.store');
+    ->name('tareas.store')
+    ->middleware('permission:crear tareas');
 
 Route::get('/tareas/{tarea}/edit', [App\Http\Controllers\TareaController::class, 'edit'])
-    ->name('tareas.edit');
+    ->name('tareas.edit')
+    ->middleware('permission:editar tareas');
 
 Route::put('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'update'])
-    ->name('tareas.update');
+    ->name('tareas.update')
+    ->middleware('permission:editar tareas');
 
 Route::delete('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'destroy'])
-    ->name('tareas.destroy');
+    ->name('tareas.destroy')
+    ->middleware('permission:eliminar tareas');
 
 # Rutas Vehiculos
 
