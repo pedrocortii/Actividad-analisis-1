@@ -5,9 +5,11 @@
     <div class="card border-0 shadow-sm rounded-3">
         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top">
             <h4 class="mb-0 fw-semibold">Empleados</h4>
+            @can('crear empleados')
             <a href="{{ route('employees.create') }}" class="btn btn-outline-light btn-sm">
                 <i class="fa-solid fa-plus"></i> Agregar empleado
             </a>
+            @endcan
         </div>
 
         <div class="card-body bg-white">
@@ -41,9 +43,12 @@
                                 @endforeach
                             </div>
                             <div class="mt-3 d-flex gap-2">
+                                @can('editar empleados')
                                 <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-outline-primary btn-sm flex-fill">
                                     <i class="fa-solid fa-pen-to-square"></i> Editar
                                 </a>
+                                @endcan
+                                @can('borrar empleados')
                                 <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="flex-fill">
                                     @csrf
                                     @method('DELETE')
@@ -51,6 +56,7 @@
                                         <i class="fa-solid fa-trash"></i> Eliminar
                                     </button>
                                 </form>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -60,6 +66,14 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            console.log("jQuery listo!");
+        });
+    </script>
+@endpush
 
 @push('styles')
 <style>

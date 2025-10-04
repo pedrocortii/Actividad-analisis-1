@@ -7,9 +7,11 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>{{ __('work-group-employees') }}</span>
+                        @can('crear grupos de trabajo')
                         <a href="{{ route('work-group-employees.create') }}" class="btn btn-success btn-sm">
                             <i class="fa-solid fa-plus"></i> Agregar Grupo de Trabajo
                         </a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         @if (session('status'))
@@ -17,9 +19,12 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <table class="table">
+                        <table class="table" id="tableDetalle">
                             <thead>
                                 <tr>
+                                    <th>Identificación</th>
+                                    <th>Nombre</th>
+                                    <th>Acciones</th>
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     <th>ID de vehiculo</th>
@@ -35,9 +40,12 @@
                                         <td>{{ $work-group->employee_id }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
+                                                @can('editar grupos de trabajo')
                                                 <a href="{{ route('work-groups.edit', $work-group->id) }}" class="btn btn-warning btn-sm px-3 py-1">
                                                     <i class="fa-solid fa-pen-to-square"></i> Editar
                                                 </a>
+                                                @endcan
+                                                @can('borrar grupos de trabajo')
                                                 <form action="{{ route('work-groups.destroy', $work-group->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -45,6 +53,7 @@
                                                         <i class="fa-solid fa-trash"></i> Eliminar 
                                                     </button>
                                                 </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
@@ -57,3 +66,33 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            console.log("jQuery listo!");
+        });
+        
+        $(document).ready(function() {
+            $('#tableDetalle').DataTable({
+                "language":{
+                    "info":"_TOTAL_ registros",
+                    "search":"Buscar",
+                    "paginate":{
+                        "next":"Siguiente",
+                        "previous":"Anterior"
+                    },
+                    "lengthMenu":'Mostrar <select>'+
+                        '<option value="5">5</option>'+
+                        '<option value="10">10</option>'+
+                        '</select> registros',
+                    "loadingRecords":"Cargando...",
+                    "Processing":"Procesando...",
+                    "emptyTable":"No hay datos",
+                    "zeroRecords":"No hay coincidencias",
+                    "infoEmpty":"",
+                    "infoFiltered":""
+                }
+            });
+        } );
+    </script>
+@endpush

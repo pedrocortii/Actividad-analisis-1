@@ -18,12 +18,14 @@
                         <h5 class="fw-bold text-dark">{{ $group->name }}</h5>
 
                         <!-- Vehículo -->
+                        Vehículo:
                         <p class="text-muted mb-2">
-                            Vehículo: 
                             @if($group->vehiculo)
-                                <span class="fw-semibold text-dark">{{ $group->vehiculo->patente }}</span>
-                                <br>
-                                <small>{{ $group->vehiculo->marca }} {{ $group->vehiculo->modelo }}</small>
+                                <span class="fw-semibold text-dark">Patente: {{ $group->vehiculo->patente }}</span><br>
+                                <span>Marca: {{ $group->vehiculo->marca->nombre ?? 'Sin marca' }}</span><br>
+                                <span>Modelo: {{ $group->vehiculo->modelo }}</span><br>
+                                <span>Año: {{ $group->vehiculo->año }}</span><br>
+                                <span>VTV: {{ $group->vehiculo->vtv }}</span>
                             @else
                                 <span class="fst-italic text-secondary">Sin vehículo</span>
                             @endif
@@ -49,12 +51,17 @@
 
                         <!-- Botones -->
                         <div class="mt-auto d-flex justify-content-between gap-1">
+                            @can('ver grupos de trabajo')
                             <a href="{{ route('work-groups.show', $group->id) }}" class="btn btn-outline-secondary btn-sm flex-fill">
                                 <i class="fa-solid fa-eye"></i> Ver
                             </a>
+                            @endcan
+                            @can('editar grupos de trabajo')
                             <a href="{{ route('work-groups.edit', $group->id) }}" class="btn btn-outline-primary btn-sm flex-fill">
                                 <i class="fa-solid fa-pen-to-square"></i> Editar
                             </a>
+                            @endcan
+                            @can('borrar grupos de trabajo')
                             <form action="{{ route('work-groups.destroy', $group->id) }}" method="POST" class="flex-fill">
                                 @csrf
                                 @method('DELETE')
@@ -62,6 +69,7 @@
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </form>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -75,7 +83,12 @@
     </div>
 </div>
 @endsection
-
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            console.log("jQuery listo!");
+        });
+@endpush
 @push('styles')
 <style>
     body {

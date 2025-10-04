@@ -6,7 +6,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>{{ __('Dashboard') }}</span>
+                    @can('crear marca de vehiculos')
                     <a href="{{ route('marcaVehiculos.create') }}" class="btn btn-primary btn-sm">Añadir marca</a>
+                    @endcan
                 </div>
                 <div class="card-body">
                     @if (session('status'))
@@ -14,11 +16,12 @@
                             {{ session('status')}}
                         </div>
                     @endif
-                    <table class="table">
+                    <table class="table" id="tableDetalle">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Identificación</th>
                                 <th>Nombre</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,7 +30,10 @@
                                     <td>{{ $marcaVehiculo->id }}</td>
                                     <td>{{ $marcaVehiculo->nombre }}</td>
                                     <td>
+                                        @can('editar marca de vehiculos')
                                         <a href="{{ route('marcaVehiculo.edit', $marcaVehiculo->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                        @endcan
+                                        @can('borrar marca de vehiculos')
                                         <form action="{{ route('marcaVehiculo.destroy', $marcaVehiculo->id) }}" method="POST" style='display:inline-block;'>
                                             @csrf
                                             @method('DELETE')
@@ -35,6 +41,7 @@
                                                 Eliminar
                                             </button>
                                         </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
@@ -46,3 +53,34 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            console.log("jQuery listo!");
+        });
+        
+        $(document).ready(function() {
+            $('#tableDetalle').DataTable({
+                "language":{
+                    "info":"_TOTAL_ registros",
+                    "search":"Buscar",
+                    "paginate":{
+                        "next":"Siguiente",
+                        "previous":"Anterior"
+                    },
+                    "lengthMenu":'Mostrar <select>'+
+                        '<option value="5">5</option>'+
+                        '<option value="10">10</option>'+
+                        '</select> registros',
+                    "loadingRecords":"Cargando...",
+                    "Processing":"Procesando...",
+                    "emptyTable":"No hay datos",
+                    "zeroRecords":"No hay coincidencias",
+                    "infoEmpty":"",
+                    "infoFiltered":""
+                }
+            });
+        } );
+    </script>
+@endpush

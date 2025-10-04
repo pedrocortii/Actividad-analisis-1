@@ -7,9 +7,11 @@
             <div class="card border-0 shadow-sm rounded-3">
                 <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top">
                     <h4 class="mb-0 fw-semibold">Vehículos</h4>
+                    @can('crear vehiculos')
                     <a href="{{ route('vehiculos.create') }}" class="btn btn-outline-light btn-sm" title="Agregar vehículo">
                         <i class="fa-solid fa-plus"></i> Nuevo
                     </a>
+                    @endcan
                 </div>
                 <div class="card-body bg-white">
                     @if (session('status'))
@@ -18,7 +20,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle">
+                        <table id= "vehiculosTable" class="table table-hover align-middle">
                             <thead class="table-light">
                                 <tr>
                                     <th>ID</th>
@@ -51,9 +53,12 @@
                                         </td>
                                         <td class="text-end">
                                             <div class="d-inline-flex gap-1">
+                                                @can('editar vehiculos')
                                                 <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-outline-primary btn-sm" title="Editar">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
+                                                @endcan
+                                                @can('borrar vehiculos')
                                                 <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -61,6 +66,7 @@
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button>
                                                 </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
@@ -81,6 +87,37 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            console.log("jQuery listo!");
+        });
+        
+        $(document).ready(function() {
+            $('#vehiculosTable').DataTable({
+                "language":{
+                    "info":"_TOTAL_ registros",
+                    "search":"Buscar",
+                    "paginate":{
+                        "next":"Siguiente",
+                        "previous":"Anterior"
+                    },
+                    "lengthMenu":'Mostrar <select>'+
+                        '<option value="5">5</option>'+
+                        '<option value="10">10</option>'+
+                        '</select> registros',
+                    "loadingRecords":"Cargando...",
+                    "Processing":"Procesando...",
+                    "emptyTable":"No hay datos",
+                    "zeroRecords":"No hay coincidencias",
+                    "infoEmpty":"",
+                    "infoFiltered":""
+                }
+            });
+        } );
+    </script>
+@endpush
 
 @push('styles')
 <style>

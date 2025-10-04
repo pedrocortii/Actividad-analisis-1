@@ -16,11 +16,12 @@
                             {{ session('status')}}
                         </div>
                     @endif
-                    <table class="table">
+                    <table class="table" id="tableDetalle">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Identificación</th>
                                 <th>Nombre</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,3 +53,34 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            console.log("jQuery listo!");
+        });
+        
+        $(document).ready(function() {
+            $('#tableDetalle').DataTable({
+                "language":{
+                    "info":"_TOTAL_ registros",
+                    "search":"Buscar",
+                    "paginate":{
+                        "next":"Siguiente",
+                        "previous":"Anterior"
+                    },
+                    "lengthMenu":'Mostrar <select>'+
+                        '<option value="5">5</option>'+
+                        '<option value="10">10</option>'+
+                        '</select> registros',
+                    "loadingRecords":"Cargando...",
+                    "Processing":"Procesando...",
+                    "emptyTable":"No hay datos",
+                    "zeroRecords":"No hay coincidencias",
+                    "infoEmpty":"",
+                    "infoFiltered":""
+                }
+            });
+        } );
+    </script>
+@endpush
