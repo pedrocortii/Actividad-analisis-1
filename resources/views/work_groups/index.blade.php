@@ -56,12 +56,12 @@
                                 <i class="fa-solid fa-eye"></i> Ver
                             </a>
                             @endcan
-                            @can('editar grupos de trabajo')
+                            @can('editar work groups')
                             <a href="{{ route('work-groups.edit', $group->id) }}" class="btn btn-outline-primary btn-sm flex-fill">
                                 <i class="fa-solid fa-pen-to-square"></i> Editar
                             </a>
                             @endcan
-                            @can('borrar grupos de trabajo')
+                            @can('eliminar work groups')
                             <form action="{{ route('work-groups.destroy', $group->id) }}" method="POST" class="flex-fill">
                                 @csrf
                                 @method('DELETE')

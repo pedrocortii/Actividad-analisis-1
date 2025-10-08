@@ -43,12 +43,12 @@
                                 @endforeach
                             </div>
                             <div class="mt-3 d-flex gap-2">
-                                @can('editar empleados')
+                                @can('editar employees')
                                 <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-outline-primary btn-sm flex-fill">
                                     <i class="fa-solid fa-pen-to-square"></i> Editar
                                 </a>
                                 @endcan
-                                @can('borrar empleados')
+                                @can('eliminar employees')
                                 <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="flex-fill">
                                     @csrf
                                     @method('DELETE')

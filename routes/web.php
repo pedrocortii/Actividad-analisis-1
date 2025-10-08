@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -207,3 +207,5 @@ Route::delete('/skills/{skill}', [App\Http\Controllers\SkillController::class, '
     ->name('skills.destroy')
     ->middleware('permission:eliminar skills');
 
+//Esta ruta usa el metodo POST por seguridad. 
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

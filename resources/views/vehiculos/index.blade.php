@@ -58,7 +58,7 @@
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 @endcan
-                                                @can('borrar vehiculos')
+                                                @can('eliminar vehiculos')
                                                 <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')

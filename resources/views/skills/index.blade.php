@@ -33,7 +33,7 @@
                                         @can('editar skills')
                                         <a href="{{ route('skills.edit', $skill->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                         @endcan
-                                        @can('borrar skills')
+                                        @can('eliminar skills')
                                         <form action="{{ route('skills.destroy', $skill->id) }}" method="POST" style='display:inline-block;'>
                                             @csrf
                                             @method('DELETE')

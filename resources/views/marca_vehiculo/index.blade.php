@@ -30,10 +30,10 @@
                                     <td>{{ $marcaVehiculo->id }}</td>
                                     <td>{{ $marcaVehiculo->nombre }}</td>
                                     <td>
-                                        @can('editar marca de vehiculos')
+                                        @can('editar marca vehiculos')
                                         <a href="{{ route('marcaVehiculo.edit', $marcaVehiculo->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                         @endcan
-                                        @can('borrar marca de vehiculos')
+                                        @can('eliminar marca vehiculos')
                                         <form action="{{ route('marcaVehiculo.destroy', $marcaVehiculo->id) }}" method="POST" style='display:inline-block;'>
                                             @csrf
                                             @method('DELETE')

@@ -40,12 +40,12 @@
                                         <td>{{ $work-group->employee_id }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
-                                                @can('editar grupos de trabajo')
+                                                @can('editar work group employees')
                                                 <a href="{{ route('work-groups.edit', $work-group->id) }}" class="btn btn-warning btn-sm px-3 py-1">
                                                     <i class="fa-solid fa-pen-to-square"></i> Editar
                                                 </a>
                                                 @endcan
-                                                @can('borrar grupos de trabajo')
+                                                @can('eliminar work group employees')
                                                 <form action="{{ route('work-groups.destroy', $work-group->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')

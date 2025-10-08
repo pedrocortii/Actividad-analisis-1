@@ -27,22 +27,22 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'ver vehiculos']);
         Permission::create(['name' => 'crear vehiculos']);
         Permission::create(['name' => 'editar vehiculos']);
-        Permission::create(['name' => 'borrar vehiculos']);
+        Permission::create(['name' => 'eliminar vehiculos']);
         //Permisos Employees
         Permission::create(['name' => 'ver employees']);
         Permission::create(['name' => 'crear employees']);
         Permission::create(['name' => 'editar employees']);
-        Permission::create(['name' => 'borrar employees']);
+        Permission::create(['name' => 'eliminar employees']);
         //Permisos Work Groups
         Permission::create(['name' => 'ver work groups']);
         Permission::create(['name' => 'crear work groups']);
         Permission::create(['name' => 'editar work groups']);
-        Permission::create(['name' => 'borrar work groups']);
+        Permission::create(['name' => 'eliminar work groups']);
         //Permisos Work Groups Employees
         Permission::create(['name' => 'ver work group employees']);
         Permission::create(['name' => 'crear work group employees']);
         Permission::create(['name' => 'editar work group employees']);
-        Permission::create(['name' => 'borrar work group employees']);
+        Permission::create(['name' => 'eliminar work group employees']);
         //Permisos Marca Vehiculos
         Permission::create(['name' => 'ver marca vehiculos']);
         Permission::create(['name' => 'crear marca vehiculos']);
