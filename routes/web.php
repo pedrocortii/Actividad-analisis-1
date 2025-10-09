@@ -207,5 +207,10 @@ Route::delete('/skills/{skill}', [App\Http\Controllers\SkillController::class, '
     ->name('skills.destroy')
     ->middleware('permission:eliminar skills');
 
+Route::get('/clientes', function () {
+    return view('auth.clientes.index');
+})->middleware('auth')->name('clientes.index');
+
+
 //Esta ruta usa el metodo POST por seguridad. 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class LoginController extends Controller
 {
     /*
@@ -48,5 +49,26 @@ public function logout(Request $request)
     $request->session()->regenerateToken(); // Regenera el token de seguridad
 
     return redirect('/'); // Redirige al welcome.blade.php
+}
+
+protected function redirectTo()
+{
+    $user = auth()->user();
+
+    if ($user->hasRole('cliente')) {
+        return '/clientes';
+    }
+
+    if ($user->hasRole('Admin')) {
+        return '/home';
+    }
+
+    // Si tiene otro rol, por ejemplo "Empleado"
+    if ($user->hasRole('Empleado')) {
+        return '/home';
+    }
+
+    // Por defecto, si no tiene rol o algo falla:
+    return '/home';
 }
 }

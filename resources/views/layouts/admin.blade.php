@@ -219,68 +219,70 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-              with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-              <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Home</p>
+        @if(!auth()->user()->hasRole('cliente')) 
+              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+            <li class="nav-item menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                  <i class="right fas fa-angle-left"></i>
+                </p>
               </a>
-              </li>
-              <li class="nav-item">
-              <a href="{{ route('vehiculos.index') }}" class="nav-link {{ request()->routeIs('vehiculos.*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Vehiculos</p>
-              </a>
-              </li>
-              <li class="nav-item">
-              <a href="{{ route('employees.index') }}" class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Empleados</p>
-              </a>
-              </li>
-              <li class="nav-item">
-              <a href="{{ route('skills.index') }}" class="nav-link {{ request()->routeIs('skills.*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Skills</p>
-              </a>
-              </li>
-              <li class="nav-item">
-              <a href="{{ route('work-groups.index') }}" class="nav-link {{ request()->routeIs('work-groups.*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Grupo de trabajos</p>
-              </a>
-              </li>
-              <li class="nav-item">
-              <a href="#" class="nav-link {{ request()->is('pedidos*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Pedidos</p>
-              </a>
-              </li>
-              <li class="nav-item">     
-              <a href="{{ route('marcaVehiculos.index') }}" class="nav-link {{ request()->routeIs('marcaVehiculos.*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Marca de vehiculos</p>
-              </a>
-              </li>
-              <li class="nav-item">     
-              <a href="{{ route('tareas.index') }}" class="nav-link {{ request()->routeIs('tareas.*') ? 'active' : '' }}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Tareas</p>
-              </a>
-              </li>
-            </ul>
-          </li>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Home</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{ route('vehiculos.index') }}" class="nav-link {{ request()->routeIs('vehiculos.*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vehiculos</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{ route('employees.index') }}" class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Empleados</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{ route('skills.index') }}" class="nav-link {{ request()->routeIs('skills.*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Skills</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="{{ route('work-groups.index') }}" class="nav-link {{ request()->routeIs('work-groups.*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Grupo de trabajos</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="#" class="nav-link {{ request()->is('pedidos*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Pedidos</p>
+                </a>
+                </li>
+                <li class="nav-item">     
+                <a href="{{ route('marcaVehiculos.index') }}" class="nav-link {{ request()->routeIs('marcaVehiculos.*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Marca de vehiculos</p>
+                </a>
+                </li>
+                <li class="nav-item">     
+                <a href="{{ route('tareas.index') }}" class="nav-link {{ request()->routeIs('tareas.*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tareas</p>
+                </a>
+                </li>
+              </ul>
+            </li>
+        
     
           <li class="nav-item">
             <ul class="nav nav-treeview">
@@ -420,6 +422,7 @@
               </li>
             </ul>
           </li>
+        @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
