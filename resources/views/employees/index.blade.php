@@ -5,7 +5,7 @@
     <div class="card border-0 shadow-sm rounded-3">
         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top">
             <h4 class="mb-0 fw-semibold">Empleados</h4>
-            @can('crear empleados')
+            @can('crear employees')
             <a href="{{ route('employees.create') }}" class="btn btn-outline-light btn-sm">
                 <i class="fa-solid fa-plus"></i> Agregar empleado
             </a>

@@ -60,7 +60,6 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
-<<<<<<< Updated upstream
       <li class="nav-item d-flex align-items-center">
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
           @csrf
@@ -69,16 +68,6 @@
           </button>
         </form>
       </li>
-=======
-  <li class="nav-item d-flex align-items-center">
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
-      @csrf
-      <button type="submit" class="btn btn-danger btn-sm">
-        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-      </button>
-    </form>
-  </li>
->>>>>>> Stashed changes
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -114,313 +103,123 @@
       </div>
     </div>
   </div>
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        @if(!auth()->user()->hasRole('cliente')) 
-              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                  Dashboard
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Home</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="{{ route('vehiculos.index') }}" class="nav-link {{ request()->routeIs('vehiculos.*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Vehiculos</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="{{ route('employees.index') }}" class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Empleados</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="{{ route('skills.index') }}" class="nav-link {{ request()->routeIs('skills.*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Skills</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="{{ route('work-groups.index') }}" class="nav-link {{ request()->routeIs('work-groups.*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Grupo de trabajos</p>
-                </a>
-                </li>
-                <li class="nav-item">
-                <a href="#" class="nav-link {{ request()->is('pedidos*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pedidos</p>
-                </a>
-                </li>
-                <li class="nav-item">     
-                <a href="{{ route('marcaVehiculos.index') }}" class="nav-link {{ request()->routeIs('marcaVehiculos.*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Marca de vehiculos</p>
-                </a>
-                </li>
-                <li class="nav-item">     
-                <a href="{{ route('tareas.index') }}" class="nav-link {{ request()->routeIs('tareas.*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Tareas</p>
-                </a>
-                </li>
-              </ul>
-            </li>
         
-    
+
+  <!-- Sidebar Menu -->
+  @if(!auth()->user()->hasRole('cliente')) 
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          <!-- Home -->
           <li class="nav-item">
+            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+              <i class="fas fa-home nav-icon"></i>
+              <p>Home</p>
+            </a>
+          </li>
+
+          <!-- Gestión de flota -->
+          <li class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="fas fa-truck nav-icon"></i>
+        <p>
+          Gestión de flota
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{ route('vehiculos.index') }}" class="nav-link {{ request()->routeIs('vehiculos.*') ? 'active' : '' }}">
+            <i class="fas fa-truck nav-icon"></i>
+            <p>Vehículos</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('marcaVehiculos.index') }}" class="nav-link {{ request()->routeIs('marcaVehiculos.*') ? 'active' : '' }}">
+            <i class="fas fa-car-side nav-icon"></i>
+            <p>Marca de vehículos</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+          <!-- Gestión de empleados -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-user-tie nav-icon"></i>
+              <p>
+                Gestión de empleados
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Login & Register v1
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="pages/examples/login.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Login v1</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="pages/examples/register.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Register v1</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="pages/examples/forgot-password.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Forgot Password v1</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="pages/examples/recover-password.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Recover Password v1</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Login & Register v2
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="pages/examples/login-v2.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Login v2</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="pages/examples/register-v2.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Register v2</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="pages/examples/forgot-password-v2.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Forgot Password v2</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="pages/examples/recover-password-v2.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Recover Password v2</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/lockscreen.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Lockscreen</p>
+                <a href="{{ route('employees.index') }}" class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p>Empleados</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/examples/legacy-user-menu.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Legacy User Menu</p>
+                <a href="{{ route('skills.index') }}" class="nav-link {{ request()->routeIs('skills.*') ? 'active' : '' }}">
+                  <i class="fas fa-lightbulb nav-icon"></i>
+                  <p>Skills</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+          <!-- Gestión de trabajo -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-briefcase nav-icon"></i>
+              <p>
+                Gestión de trabajo
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('work-groups.index') }}" class="nav-link {{ request()->routeIs('work-groups.*') ? 'active' : '' }}">
+                  <i class="fas fa-people-carry nav-icon"></i>
+                  <p>Grupos de trabajo</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/examples/language-menu.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Language Menu</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/404.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Error 404</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/500.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Error 500</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/pace.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pace</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/blank.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Blank Page</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="starter.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Starter Page</p>
+                <a href="{{ route('tareas.index') }}" class="nav-link {{ request()->routeIs('tareas.*') ? 'active' : '' }}">
+                  <i class="fas fa-tasks nav-icon"></i>
+                  <p>Tareas</p>
                 </a>
               </li>
             </ul>
           </li>
-=======
-  <!-- Sidebar Menu -->
-  <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-      <!-- Home -->
-      <li class="nav-item">
-        <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-          <i class="fas fa-home nav-icon"></i>
-          <p>Home</p>
-        </a>
-      </li>
-
-      <!-- Gestión de flota -->
-      <li class="nav-item">
-  <a href="#" class="nav-link">
-    <i class="fas fa-truck nav-icon"></i>
-    <p>
-      Gestión de flota
-      <i class="right fas fa-angle-left"></i>
-    </p>
-  </a>
-  <ul class="nav nav-treeview">
-    <li class="nav-item">
-      <a href="{{ route('vehiculos.index') }}" class="nav-link {{ request()->routeIs('vehiculos.*') ? 'active' : '' }}">
-        <i class="fas fa-truck nav-icon"></i>
-        <p>Vehículos</p>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="{{ route('marcaVehiculos.index') }}" class="nav-link {{ request()->routeIs('marcaVehiculos.*') ? 'active' : '' }}">
-        <i class="fas fa-car-side nav-icon"></i>
-        <p>Marca de vehículos</p>
-      </a>
-    </li>
-  </ul>
-</li>
-
-      <!-- Gestión de empleados -->
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="fas fa-user-tie nav-icon"></i>
-          <p>
-            Gestión de empleados
-            <i class="right fas fa-angle-left"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
+          <!-- Órdenes de trabajo -->
           <li class="nav-item">
-            <a href="{{ route('employees.index') }}" class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
-              <i class="fas fa-users nav-icon"></i>
-              <p>Empleados</p>
+            <a href="#" class="nav-link">
+              <i class="fas fa-file-invoice nav-icon"></i>
+              <p>
+                Órdenes de trabajo
+                <i class="right fas fa-angle-left"></i>
+              </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('work-orders.index') }}" class="nav-link {{ request()->routeIs('work-orders.*') ? 'active' : '' }}">
+                  <i class="fas fa-box nav-icon"></i>
+                  <p>Órdenes</p>
+                </a>
+              </li>
+            </ul>
           </li>
-          <li class="nav-item">
-            <a href="{{ route('skills.index') }}" class="nav-link {{ request()->routeIs('skills.*') ? 'active' : '' }}">
-              <i class="fas fa-lightbulb nav-icon"></i>
-              <p>Skills</p>
-            </a>
-          </li>
->>>>>>> Stashed changes
+
         </ul>
-      </li>
-
-      <!-- Gestión de trabajo -->
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="fas fa-briefcase nav-icon"></i>
-          <p>
-            Gestión de trabajo
-            <i class="right fas fa-angle-left"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{ route('work-groups.index') }}" class="nav-link {{ request()->routeIs('work-groups.*') ? 'active' : '' }}">
-              <i class="fas fa-people-carry nav-icon"></i>
-              <p>Grupos de trabajo</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('tareas.index') }}" class="nav-link {{ request()->routeIs('tareas.*') ? 'active' : '' }}">
-              <i class="fas fa-tasks nav-icon"></i>
-              <p>Tareas</p>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      <!-- Órdenes de trabajo -->
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="fas fa-file-invoice nav-icon"></i>
-          <p>
-            Órdenes de trabajo
-            <i class="right fas fa-angle-left"></i>
-          </p>
-        </a>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{ route('work-orders.index') }}" class="nav-link {{ request()->routeIs('work-orders.*') ? 'active' : '' }}">
-              <i class="fas fa-box nav-icon"></i>
-              <p>Órdenes</p>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-    </ul>
-  </nav>
-  <!-- /.sidebar-menu -->
-</div>
-
-    <!-- /.sidebar -->
-  </aside>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    @endif
+        <!-- /.sidebar -->
+      </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">

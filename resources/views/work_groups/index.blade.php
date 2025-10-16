@@ -51,7 +51,7 @@
 
                         <!-- Botones -->
                         <div class="mt-auto d-flex justify-content-between gap-1">
-                            @can('ver grupos de trabajo')
+                            @can('ver work groups')
                             <a href="{{ route('work-groups.show', $group->id) }}" class="btn btn-outline-secondary btn-sm flex-fill">
                                 <i class="fa-solid fa-eye"></i> Ver
                             </a>

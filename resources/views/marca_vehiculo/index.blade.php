@@ -8,7 +8,7 @@
                 <h3 class="fw-bold text-dark mb-0">
                     <i class="fas fa-car-side nav-icon"></i> Marcas de vehículos
                 </h3>
-                @can('crear marca de vehiculos')
+                @can('crear marca vehiculos')
                 <a href="{{ route('marcaVehiculos.create') }}" class="btn btn-primary rounded-pill shadow-sm px-3">
                     <i class="fa-solid fa-plus me-1"></i> Añadir marca
                 </a>

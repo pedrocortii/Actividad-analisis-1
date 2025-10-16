@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>{{ __('work-group-employees') }}</span>
-                        @can('crear grupos de trabajo')
+                        @can('crear work group employees')
                         <a href="{{ route('work-group-employees.create') }}" class="btn btn-success btn-sm">
                             <i class="fa-solid fa-plus"></i> Agregar Grupo de Trabajo
                         </a>
