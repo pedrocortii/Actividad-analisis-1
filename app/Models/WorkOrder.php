@@ -19,6 +19,27 @@ class WorkOrder extends Model
         'prioridad',
         'observaciones',
     ];
+
+    public static function estados()
+    {
+        return ['Pendiente', 'Aceptado', 'Completado', 'Rechazado'];
+    }
+
+    public static function transicionesPermitidas()
+    {
+        return [
+            'Pendiente'  => ['Aceptado', 'Rechazado'],
+            'Aceptado'   => ['Completado', 'Rechazado'],
+            'Completado' => [],
+            'Rechazado'  => [],
+        ];
+    }
+
+    public function puedeCambiarA(string $nuevoEstado): bool
+    {
+        $map = self::transicionesPermitidas();
+        return in_array($nuevoEstado, $map[$this->estado] ?? [], true);
+    }
 }
 
 

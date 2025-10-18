@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('fecha_solicitud');
             $table->date('fecha_programada')->nullable();
             $table->date('fecha_finalizacion')->nullable();
-            $table->string('estado');
+            $table->string('estado')->default('Pendiente')->index();
             $table->string('prioridad');
             $table->text('observaciones')->nullable();
             $table->timestamps();

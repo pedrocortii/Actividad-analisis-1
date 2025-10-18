@@ -71,11 +71,11 @@
                             @endif
                         </td>
                         <td class="text-center">
-                        <button 
-                            class="btn btn-outline-primary btn-sm ver-mas rounded-pill px-3"
-                            data-workorder='@json($workOrder)'>
-                            <i class="fas fa-eye me-1"></i> Ver más
-                        </button>
+                            <button 
+                                class="btn btn-outline-primary btn-sm ver-mas rounded-pill px-3"
+                                data-workorder='@json($workOrder)'>
+                                <i class="fas fa-eye me-1"></i> Ver más
+                            </button>
                     </td>
                     </tr>
                 @endforeach
@@ -93,24 +93,28 @@
             <i class="fas fa-info-circle me-2"></i>Detalles de la orden
         </h5>
         <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="table-responsive">
-          <table class="table table-sm table-bordered mb-0">
-            <tbody>
-              <tr><th class="bg-light">Código</th><td id="modalCodigo"></td></tr>
-              <tr><th class="bg-light">Descripción</th><td id="modalDescripcion"></td></tr>
-              <tr><th class="bg-light">Dirección</th><td id="modalDireccion"></td></tr>
-              <tr><th class="bg-light">Fecha solicitud</th><td id="modalFechaSolicitud"></td></tr>
-              <tr><th class="bg-light">Fecha programada</th><td id="modalFechaProgramada"></td></tr>
-              <tr><th class="bg-light">Fecha finalización</th><td id="modalFechaFinalizacion"></td></tr>
-              <tr><th class="bg-light">Estado</th><td id="modalEstado"></td></tr>
-              <tr><th class="bg-light">Prioridad</th><td id="modalPrioridad"></td></tr>
-              <tr><th class="bg-light">Observaciones</th><td id="modalObservaciones"></td></tr>
-            </tbody>
-          </table>
         </div>
-      </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered mb-0">
+                    <tbody>
+                        <tr><th class="bg-light">Código</th><td id="modalCodigo"></td></tr>
+                        <tr><th class="bg-light">Descripción</th><td id="modalDescripcion"></td></tr>
+                        <tr><th class="bg-light">Dirección</th><td id="modalDireccion"></td></tr>
+                        <tr><th class="bg-light">Fecha solicitud</th><td id="modalFechaSolicitud"></td></tr>
+                        <tr><th class="bg-light">Fecha programada</th><td id="modalFechaProgramada"></td></tr>
+                        <tr><th class="bg-light">Fecha finalización</th><td id="modalFechaFinalizacion"></td></tr>
+                        <tr><th class="bg-light">Estado</th><td id="modalEstado"></td></tr>
+                        <tr><th class="bg-light">Prioridad</th><td id="modalPrioridad"></td></tr>
+                        <tr><th class="bg-light">Observaciones</th><td id="modalObservaciones"></td></tr>
+                    </tbody>
+                </table>
+                <div class="mt-3">
+                    <h6>Acciones</h6>
+                    <div id="modalActions" class="d-flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </div>
@@ -162,17 +166,52 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('click', '.ver-mas', function() {
-        const workOrder = $(this).data('workorder');
-        $('#modalCodigo').text(workOrder.codigo);
-        $('#modalDescripcion').text(workOrder.descripcion);
-        $('#modalDireccion').text(workOrder.direccion_de_servicio);
-        $('#modalFechaSolicitud').text(workOrder.fecha_solicitud);
-        $('#modalFechaProgramada').text(workOrder.fecha_programada);
-        $('#modalFechaFinalizacion').text(workOrder.fecha_finalizacion || '—');
-        $('#modalEstado').text(workOrder.estado);
-        $('#modalPrioridad').text(workOrder.prioridad);
-        $('#modalObservaciones').text(workOrder.observaciones || 'Sin observaciones');
+        $(document).on('click', '.ver-mas', function() {
+            const workOrder = $(this).data('workorder');
+            $('#modalCodigo').text(workOrder.codigo);
+            $('#modalDescripcion').text(workOrder.descripcion);
+            $('#modalDireccion').text(workOrder.direccion_de_servicio);
+            $('#modalFechaSolicitud').text(workOrder.fecha_solicitud);
+            $('#modalFechaProgramada').text(workOrder.fecha_programada);
+            $('#modalFechaFinalizacion').text(workOrder.fecha_finalizacion || '—');
+            $('#modalEstado').text(workOrder.estado);
+            $('#modalPrioridad').text(workOrder.prioridad);
+            $('#modalObservaciones').text(workOrder.observaciones || 'Sin observaciones');
+
+        // Mapa de transiciones (ajustá las etiquetas si tu DB usa minúsculas)
+        const transiciones = {
+            'Pendiente': ['Aceptado', 'Rechazado'],
+            'Aceptado': ['Completado', 'Rechazado'],
+            'Completado': [],
+            'Rechazado': []
+        };
+
+        const accionesContainer = $('#modalActions');
+        accionesContainer.empty();
+
+        const opciones = transiciones[workOrder.estado] || [];
+
+        if (opciones.length === 0) {
+            accionesContainer.append('<span class="text-muted">No hay acciones disponibles para este estado.</span>');
+        } else {
+            // Extraemos token CSRF del meta tag (asegurarse que layout lo tenga)
+            const token = $('meta[name="csrf-token"]').attr('content') || '';
+
+            opciones.forEach(function(op) {
+                // Creamos formulario con campo _token
+                const $form = $('<form/>', {
+                    method: 'POST',
+                    action: '/work-orders/' + workOrder.id + '/estado',
+                    css: { display: 'inline-block', marginRight: '6px' }
+                });
+                $form.append($('<input/>', { type: 'hidden', name: '_token', value: token }));
+                $form.append($('<input/>', { type: 'hidden', name: 'estado', value: op }));
+                const $btn = $('<button/>', { type: 'submit', class: 'btn btn-sm btn-primary', text: op });
+                $form.append($btn);
+                accionesContainer.append($form);
+            });
+        }
+
         $('#modalWorkOrder').modal('show');
     });
 });

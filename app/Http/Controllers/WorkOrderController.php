@@ -6,6 +6,8 @@ use App\Models\WorkOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkOrderRequest;
 use App\Http\Requests\UpdateWorkOrderRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class WorkOrderController extends Controller
 {
@@ -89,5 +91,23 @@ class WorkOrderController extends Controller
     {
         //$workOrder->delete();
         //return redirect()->route('work_orders.index')->with('success', 'Orden de trabajo eliminada exitosamente.');
+    }
+
+    public function changeEstado(Request $request, WorkOrder $workOrder)
+    {
+        $request->validate([
+            'estado' => ['required',Rule::in(WorkOrder::estados()),],
+        ]);
+
+        $nuevoEstado = $request->input('estado');
+
+        if (!$workOrder->puedeCambiarA($nuevoEstado)) {
+            return redirect()->back()->withErrors(['estado' => 'Transición de estado no permitida.']);
+        }
+
+        $workOrder->estado = $nuevoEstado;
+        $workOrder->save();
+
+        return redirect()->route('work-orders.index')->with('success', 'Estado de la orden de trabajo actualizado exitosamente.');
     }
 }

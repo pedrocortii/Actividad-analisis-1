@@ -214,6 +214,9 @@ Route::get('/clientes', function () {
 
 Route::resource('/work-orders', App\Http\Controllers\WorkOrderController::class)
     ->name('*', 'work-orders.index');
+// Ruta: cambiar estado de una orden de trabajo
+Route::post('/work-orders/{work_order}/estado', [App\Http\Controllers\WorkOrderController::class, 'changeEstado'])
+    ->name('work-orders.changeEstado');
 
 //Esta ruta usa el metodo POST por seguridad. 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
