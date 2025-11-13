@@ -57,7 +57,7 @@
                                         </td>
                                         <td>
                                             @if($vehiculo->foto)
-                                                <img src="{{ asset('images/vehiculo' . $vehiculo->foto) }}" alt="Foto" class="img-thumbnail shadow-sm" style="max-width: 70px; border-radius: 8px;">
+                                                <img src="{{ asset('storage/' . $vehiculo->foto) }}" alt="Foto" class="img-thumbnail shadow-sm" style="max-width: 70px; border-radius: 8px;">
                                             @else
                                                 <span class="text-muted fst-italic">Sin foto</span>
                                             @endif

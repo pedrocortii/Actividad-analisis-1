@@ -5,10 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{__('Crear Nueva Tarea') }}</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">{{__('Crear Nuevo Vehículo') }}</h5>
+                    <a href="{{ route('vehiculos.index') }}" class="btn btn-secondary btn-sm">Volver</a>
+                </div>
 
                 <div class="card-body">
-                    <form action="{{ route('vehiculos.store') }}" method="POST">
+                    <form action="{{ route('vehiculos.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf   
                         <div class="form-group">
                             <label for="Patente">Patente</label>

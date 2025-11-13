@@ -6,6 +6,11 @@
         <div class="col-lg-8 text-center">
             <h2 class="fw-bold text-dark mb-1">Grupos de Trabajo</h2>
             <p class="text-muted">Listado de grupos y sus integrantes</p>
+            @can('crear work groups')
+            <a href="{{ route('work-groups.create') }}" class="btn btn-outline-dark btn-sm mt-2">
+                <i class="fa-solid fa-plus"></i> Agregar grupo de trabajo
+            </a>
+            @endcan
         </div>
     </div>
 

@@ -56,6 +56,7 @@ class RoleSeeder extends Seeder
         //permisos work orders
         Permission::create(['name' => 'ver work orders']);
         Permission::create(['name' => 'editar work orders']);
+        Permission::create(['name' => 'crear work orders']);
         //Crear roles 
         $admin = Role::create(['name' => 'admin']);
         $empleado = Role::create(['name' => 'empleado']);

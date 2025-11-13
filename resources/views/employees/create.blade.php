@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Registrar nuevo empleado') }}</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">{{ __('Registrar nuevo empleado') }}</h5>
+                    <a href="{{ route('employees.index') }}" class="btn btn-secondary btn-sm">Volver</a>
+                </div>
 
                 <div class="card-body vh-75 overflow-auto">
                     <form action="{{ route('employees.store') }}" method="POST">

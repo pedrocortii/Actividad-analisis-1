@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{__('Añadir nueva marca') }}</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">{{__('Añadir nueva marca') }}</h5>
+                    <a href="{{ route('marcaVehiculos.index') }}" class="btn btn-secondary btn-sm">Volver</a>
+                </div>
 
                 <div class="card-body">
                     <form action="{{ route('marcaVehiculos.store') }}" method="POST">

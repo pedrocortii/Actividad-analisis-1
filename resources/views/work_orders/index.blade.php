@@ -8,9 +8,11 @@
         <h3 class="fw-bold">
             <i class="fas fa-clipboard-list me-2"></i>  Órdenes de trabajo
         </h3>
-        <button class="btn btn-primary rounded-pill shadow-sm">
-            <i class="fas fa-plus me-1"></i> Nueva orden
-        </button>
+        @can('crear work orders')
+            <button class="btn btn-primary rounded-pill shadow-sm">
+                <i class="fas fa-plus me-1"></i> Nueva orden
+            </button>
+        @endcan
     </div>
 
     <!-- Tabla -->

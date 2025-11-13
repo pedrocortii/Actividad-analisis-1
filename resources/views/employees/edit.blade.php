@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Editar datos del empleado</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Editar datos del empleado</h5>
+                    <a href="{{ route('employees.index') }}" class="btn btn-secondary btn-sm">Volver</a>
+                </div>
                 <div class="card-body">
                     <form action="{{ route('employees.update', $employee->id) }}" method="POST">
                         @csrf
