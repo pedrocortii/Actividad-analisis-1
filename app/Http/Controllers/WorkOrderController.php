@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkOrderRequest;
 use App\Http\Requests\UpdateWorkOrderRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class WorkOrderController extends Controller
@@ -29,8 +30,9 @@ class WorkOrderController extends Controller
      */
     public function create()
     {
-        //$workOrders = WorkOrder::all();
-        //return view('work_orders.create', compact('workOrders'));
+        // Recuperar las tareas para el menú desplegable de descripción
+        $tareas = \App\Models\Tarea::all();
+        return view('work_orders.create', compact('tareas'));
     }
 
     /**
@@ -41,8 +43,28 @@ class WorkOrderController extends Controller
      */
     public function store(StoreWorkOrderRequest $request)
     {
-        //$workOrder = WorkOrder::create($request->all());
-        //return redirect()->route('work_orders.index')->with('success', 'Orden de trabajo creada exitosamente.');
+        // Lógica para que un cliente cree una orden
+        $workOrder = new WorkOrder();
+        $workOrder->user_id = Auth::id(); // Asignar el ID del usuario autenticado
+        $workOrder->descripcion = $request->input('descripcion');
+        $workOrder->direccion_de_servicio = $request->input('direccion_de_servicio');
+        
+        // Valores por defecto al crear
+        $workOrder->fecha_solicitud = now();
+        $workOrder->estado = 'Pendiente de Asignacion'; // Estado inicial
+        $workOrder->prioridad = 'Media'; // Prioridad por defecto
+        
+        // Generar un código único, por ejemplo:
+        $workOrder->codigo = 'ORD-' . strtoupper(uniqid());
+
+        $workOrder->save();
+        
+        // Si el usuario es un cliente, lo redirigimos a su panel.
+        if (auth()->user()->hasRole('cliente')) {
+            return redirect()->route('clientes.index')->with('success', 'Tu solicitud de orden de trabajo ha sido enviada exitosamente.');
+        }
+
+        return redirect()->route('work-orders.index')->with('success', 'Orden de trabajo creada exitosamente.');
     }
 
     /**
@@ -53,7 +75,7 @@ class WorkOrderController extends Controller
      */
     public function show(WorkOrder $workOrder)
     {
-        //
+        return view('work_orders.show', compact('workOrder'));
     }
 
     /**
@@ -64,8 +86,11 @@ class WorkOrderController extends Controller
      */
     public function edit(WorkOrder $workOrder)
     {
-        //workOrder::all();
-        //return view('work_orders.edit', compact('workOrder'));
+        // Lógica para que el Jefe edite/asigne la orden
+        // Necesitamos la lista de grupos de trabajo para mostrarla en un desplegable
+        $workGroups = \App\Models\WorkGroup::all();
+        
+        return view('work_orders.edit', compact('workOrder', 'workGroups'));
     }
 
     /**
@@ -77,8 +102,23 @@ class WorkOrderController extends Controller
      */
     public function update(UpdateWorkOrderRequest $request, WorkOrder $workOrder)
     {
-        //$workOrder->update($request->all());
-        //return redirect()->route('work_orders.index')->with('success', 'Orden de trabajo actualizada exitosamente.');
+        // Lógica para que el Jefe actualice y asigne
+        $workOrder->descripcion = $request->input('descripcion');
+        $workOrder->direccion_de_servicio = $request->input('direccion_de_servicio');
+        $workOrder->prioridad = $request->input('prioridad');
+        $workOrder->fecha_programada = $request->input('fecha_programada');
+        
+        // Aquí está la lógica de asignación
+        $workOrder->work_group_id = $request->input('work_group_id');
+        
+        // Si se asigna un grupo, cambiamos el estado
+        if ($request->filled('work_group_id')) {
+            $workOrder->estado = 'Asignado';
+        }
+
+        $workOrder->save();
+
+        return redirect()->route('work-orders.index')->with('success', 'Orden de trabajo actualizada exitosamente.');
     }
 
     /**

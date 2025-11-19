@@ -12,7 +12,7 @@
                 </h3>
                 @can('crear vehiculos')
                 <a href="{{ route('vehiculos.create') }}" class="btn btn-primary rounded-pill shadow-sm px-3">
-                    <i class="fa-solid fa-plus me-1"></i> Nuevo
+                    <i class="fa-solid fa-plus me-1"></i> Registrar Vehiculo
                 </a>
                 @endcan
             </div>
@@ -37,6 +37,7 @@
                                     <th>Marca</th>
                                     <th>Modelo</th>
                                     <th>Año</th>
+                                    <th>Estado</th>
                                     <th>VTV</th>
                                     <th>Foto</th>
                                     <th class="text-center">Acciones</th>
@@ -50,6 +51,7 @@
                                         <td>{{ $vehiculo->marca->nombre ?? 'Sin marca' }}</td>
                                         <td>{{ $vehiculo->modelo }}</td>
                                         <td>{{ $vehiculo->año }}</td>
+                                        <td>{{ $vehiculo->estado }}</td>
                                         <td>
                                             <span class="badge {{ $vehiculo->vtv ? 'bg-success' : 'bg-danger' }}">
                                                 {{ $vehiculo->vtv ?? 'No disponible' }}

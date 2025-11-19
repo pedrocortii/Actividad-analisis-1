@@ -30,6 +30,11 @@
                             <input type="text" class="form-control" id="modelo" name="modelo" required>
                             <label for="Año">Año</label>
                             <input type="number" class="form-control" id="año" name="año" required>
+                            <label for="estado">Estado</label>
+                            <select class="form-control" id="estado" name="estado" required>
+                                <option value="Disponible">Disponible</option>
+                                <option value="Mantenimiento">Mantenimiento</option>
+                            </select>
                             <label for="VTV">VTV</label>
                             <input type="date" class="form-control" id="vtv" name="vtv" required>
                             <label for="Foto">Foto</label>

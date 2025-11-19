@@ -48,6 +48,7 @@ class VehiculoController extends Controller
         $vehiculo->modelo = $request->input('modelo');
         $vehiculo->año = $request->input('año');
         $vehiculo->vtv = $request->input('vtv');
+        $vehiculo->estado = $request->input('estado');
         $vehiculo->foto = $request->input('foto', null);
             if ($request->hasFile('foto')) { 
                 $file = $request->file('foto');
@@ -98,6 +99,7 @@ class VehiculoController extends Controller
         $vehiculo->marca_vehiculo_id = $request->input('marca_vehiculo_id');
         $vehiculo->modelo = $request->input('modelo');
         $vehiculo->año = $request->input('año');
+        $vehiculo->estado = $request->input('estado');
         $vehiculo->foto = $request->input('foto');
         $vehiculo->vtv = $request->input('vtv');
         $vehiculo->save();

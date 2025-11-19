@@ -207,10 +207,37 @@ Route::delete('/skills/{skill}', [App\Http\Controllers\SkillController::class, '
     ->name('skills.destroy')
     ->middleware('permission:eliminar skills');
 
+# Rutas Users
+
+Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])
+    ->name('users.index')
+    ->middleware('permission:ver usuarios');
+
+Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])
+    ->name('users.create')
+    ->middleware('permission:crear usuarios');
+
+Route::post('/users', [App\Http\Controllers\UserController::class, 'store'])
+    ->name('users.store')
+    ->middleware('permission:crear usuarios');
+
+Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])
+    ->name('users.edit')
+    ->middleware('permission:editar usuarios');
+
+Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])
+    ->name('users.update')
+    ->middleware('permission:editar usuarios');
+
+Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])
+    ->name('users.destroy')
+    ->middleware('permission:eliminar usuarios');
+
+
 // Ruta Clientes
-Route::get('/clientes', function () {
-    return view('auth.clientes.index');
-})->middleware('auth')->name('clientes.index');
+Route::get('/clientes', [App\Http\Controllers\ClienteController::class, 'index'])
+    ->middleware('auth', 'role:cliente') // Aseguramos que solo clientes entren aquí
+    ->name('clientes.index');
 
 Route::resource('/work-orders', App\Http\Controllers\WorkOrderController::class)
     ->name('*', 'work-orders.index');

@@ -9,9 +9,9 @@
             <i class="fas fa-clipboard-list me-2"></i>  Órdenes de trabajo
         </h3>
         @can('crear work orders')
-            <button class="btn btn-primary rounded-pill shadow-sm">
+            <a href="{{ route('work-orders.create') }}" class="btn btn-primary rounded-pill shadow-sm">
                 <i class="fas fa-plus me-1"></i> Nueva orden
-            </button>
+            </a>
         @endcan
     </div>
 
@@ -73,11 +73,23 @@
                             @endif
                         </td>
                         <td class="text-center">
-                            <button 
-                                class="btn btn-outline-primary btn-sm ver-mas rounded-pill px-3"
-                                data-workorder='@json($workOrder)'>
-                                <i class="fas fa-eye me-1"></i> Ver más
-                            </button>
+                            <div class="d-inline-flex gap-1">
+                                <a href="{{ route('work-orders.edit', $workOrder->id) }}" class="btn btn-sm btn-primary rounded-pill px-3" title="Editar">
+                                    <i class="fas fa-pen-to-square"></i> Editar
+                                </a>
+                                <form action="{{ route('work-orders.destroy', $workOrder->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta orden de trabajo?');" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3" title="Eliminar">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </button>
+                                </form>
+                                <button 
+                                    class="btn btn-outline-info btn-sm ver-mas rounded-pill px-3"
+                                    data-workorder='@json($workOrder)'>
+                                    <i class="fas fa-eye me-1"></i> Ver más
+                                </button>
+                            </div>
                     </td>
                     </tr>
                 @endforeach

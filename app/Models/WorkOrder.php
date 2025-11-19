@@ -20,6 +20,17 @@ class WorkOrder extends Model
         'observaciones',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'fecha_solicitud' => 'datetime',
+        'fecha_programada' => 'datetime',
+        'fecha_finalizacion' => 'datetime',
+    ];
+
     public static function estados()
     {
         return ['Pendiente', 'Aceptado', 'Completado', 'Rechazado'];

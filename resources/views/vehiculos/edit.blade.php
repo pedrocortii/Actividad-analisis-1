@@ -19,10 +19,9 @@
 
     <label for="marca_vehiculo_id">Marca</label>
                             <select class="form-control" id="marca_vehiculo_id" name="marca_vehiculo_id" required>
-                                <option value="" disabled selected>Seleccione una marca</option>
+                                <option value="" disabled>Seleccione una marca</option>
                                 @foreach($marcas as $marca)
-                                    <option value="{{ $marca->id }}">
-                                        {{ old('marca_vehiculo_id', $vehiculo->marca_vehiculo_id ?? '') == $marca->id ? 'selected' : '' }}>
+                                    <option value="{{ $marca->id }}" {{ old('marca_vehiculo_id', $vehiculo->marca_vehiculo_id) == $marca->id ? 'selected' : '' }}>
                                         {{ $marca->nombre }}
                                     </option>
                                 @endforeach
@@ -32,6 +31,12 @@
 
     <label for="año" class="form-label">Año del vehiculo</label>
     <input type="number" name="año" id="año" class="form-control" value="{{ old('año', $vehiculo->año) }}">
+
+    <label for="estado" class="form-label">Estado</label>
+    <select class="form-control" id="estado" name="estado" required>
+        <option value="Disponible" {{ old('estado', $vehiculo->estado) == 'Disponible' ? 'selected' : '' }}>Disponible</option>
+        <option value="En Mantenimiento" {{ old('estado', $vehiculo->estado) == 'En Mantenimiento' ? 'selected' : '' }}>En Mantenimiento</option>
+    </select>
 
     <label for="foto" class="form-label">Foto del vehiculo</label>
     <input type="file" name="foto" id="foto" class="form-control-file" value="{{ old('foto', $vehiculo->foto) }}" accept="images/">

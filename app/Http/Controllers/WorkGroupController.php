@@ -28,6 +28,7 @@ class WorkGroupController extends Controller
     {
         $vehiculos = \App\Models\Vehiculo::with('marca')
             ->whereDoesntHave('workGroup')
+            ->where('estado', 'Disponible')
             ->get();
         // Traer empleados que NO están en ningún grupo
         $employees = \App\Models\Employee::whereDoesntHave('workGroups')
@@ -90,14 +91,17 @@ class WorkGroupController extends Controller
      */
     public function edit(WorkGroup $workGroup)
     {
-        // Traer vehículos disponibles O el vehículo actual del grupo
+        
         $vehiculos = \App\Models\Vehiculo::with('marca')
             ->where(function($query) use ($workGroup) {
-                $query->whereDoesntHave('workGroup')
-                      ->orWhere('id', $workGroup->vehiculo_id);
+                $query->where(function($subQuery) {
+                    $subQuery->where('estado', 'Disponible')
+                             ->whereDoesntHave('workGroup');
+                })
+                ->orWhere('id', $workGroup->vehiculo_id);
             })
             ->get();
-        // Traer empleados disponibles O los ya asignados a este grupo
+        
         $employees = \App\Models\Employee::where(function($q) use ($workGroup) {
             $q->whereDoesntHave('workGroups')
               ->orWhereHas('workGroups', function($sub) use ($workGroup) {
@@ -116,7 +120,7 @@ class WorkGroupController extends Controller
      */
     public function update(UpdateWorkGroupRequest $request, WorkGroup $workGroup)
     {
-        // Validar que ningún empleado esté en otro grupo (excepto el actual)
+        
         if ($request->employee_ids) {
             foreach ($request->employee_ids as $employeeId) {
                 $exists = WorkGroup::whereHas('employees', function($q) use ($employeeId) {
@@ -136,14 +140,14 @@ class WorkGroupController extends Controller
             'vehiculo_id' => $request->vehiculo_id,
         ]);
 
-        // Sincroniza empleados (actualiza la lista)
-        if ($request->has('employee_ids')) {
-            $workGroup->employees()->sync($request->employee_ids ?? []);
-        }
+        
+        
+        $workGroup->employees()->sync($request->employee_ids ?? []);
+        
 
         return redirect()->route('work-groups.index')->with('success', 'Grupo de trabajo actualizado exitosamente.');
+    
     }
-
     /**
      * Remove the specified resource from storage.
      *

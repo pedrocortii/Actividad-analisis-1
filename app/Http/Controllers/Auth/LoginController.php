@@ -24,13 +24,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -55,7 +48,8 @@ protected function redirectTo()
 {
     $user = auth()->user();
 
-    if ($user->hasRole('cliente')) {
+    // Hacemos la comprobación insensible a mayúsculas
+    if ($user->hasRole('cliente') || $user->hasRole('Cliente')) {
         return '/clientes';
     }
 

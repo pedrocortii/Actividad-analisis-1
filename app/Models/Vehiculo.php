@@ -16,6 +16,7 @@ class Vehiculo extends Model
         'año',
         'foto',
         'vtv',
+        'estado',
         'mobile_id'
     ];
 
