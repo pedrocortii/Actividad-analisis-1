@@ -37,7 +37,7 @@
                             <label for="work_group_id" class="form-label">Asignar Grupo de Trabajo</label>
                             <select class="form-control" id="work_group_id" name="work_group_id">
                                 <option value="">Sin Asignar</option>
-                                @foreach($workGroups as $group)
+                                @foreach($gruposDisponibles as $group)
                                     <option value="{{ $group->id }}" {{ old('work_group_id', $workOrder->work_group_id) == $group->id ? 'selected' : '' }}>
                                         {{ $group->name }}
                                     </option>

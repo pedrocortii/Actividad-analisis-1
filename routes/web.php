@@ -4,12 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Rutas Web
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Aquí es donde puedes registrar las rutas web para tu aplicación. Estas
+| rutas son cargadas por el RouteServiceProvider dentro de un grupo que
+| contiene el middleware "web". ¡Ahora crea algo genial!
 |
 */
 
@@ -73,6 +73,9 @@ Route::delete('/vehiculos/{vehiculo}', [App\Http\Controllers\VehiculoController:
     ->name('vehiculos.destroy')
     ->middleware('permission:eliminar vehiculos');
 
+Route::get('/vehiculos/export/pdf', [App\Http\Controllers\VehiculoController::class, 'exportPDF'])
+    ->name('vehiculos.exportpdf');
+
 # Rutas Employees
 
 Route::get('/employees', [App\Http\Controllers\EmployeeController::class, 'index'])
@@ -98,6 +101,9 @@ Route::put('/employees/{employee}', [App\Http\Controllers\EmployeeController::cl
 Route::delete('/employees/{employee}', [App\Http\Controllers\EmployeeController::class, 'destroy'])
     ->name('employees.destroy')
     ->middleware('permission:eliminar employees');
+
+Route::get('/employees/export/pdf', [App\Http\Controllers\EmployeeController::class, 'exportPDF'])
+    ->name('employees.exportpdf');
 
 # Rutas Work Groups
 
@@ -128,6 +134,9 @@ Route::delete('/work-groups/{workGroup}', [App\Http\Controllers\WorkGroupControl
 Route::get('/work-groups/{workGroup}', [App\Http\Controllers\WorkGroupController::class, 'show'])
     ->name('work-groups.show')
     ->middleware('permission:ver work groups');
+
+Route::get('/work-groups/export/pdf', [App\Http\Controllers\WorkGroupController::class, 'exportPDF'])
+    ->name('work-groups.exportpdf');
 
 # Rutas Work Groups Employees
 
@@ -233,6 +242,9 @@ Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'des
     ->name('users.destroy')
     ->middleware('permission:eliminar usuarios');
 
+Route::get('/users/export/pdf', [App\Http\Controllers\UserController::class, 'exportPDF'])
+    ->name('users.exportpdf');
+
 
 // Ruta Clientes
 Route::get('/clientes', [App\Http\Controllers\ClienteController::class, 'index'])
@@ -241,6 +253,9 @@ Route::get('/clientes', [App\Http\Controllers\ClienteController::class, 'index']
 
 Route::resource('/work-orders', App\Http\Controllers\WorkOrderController::class)
     ->name('*', 'work-orders.index');
+    
+Route::get('/work-orders/export/pdf', [App\Http\Controllers\WorkOrderController::class, 'exportPDF'])
+    ->name('work-orders.exportpdf');
 // Ruta: cambiar estado de una orden de trabajo
 Route::post('/work-orders/{work_order}/estado', [App\Http\Controllers\WorkOrderController::class, 'changeEstado'])
     ->name('work-orders.changeEstado');

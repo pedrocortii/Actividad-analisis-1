@@ -1,0 +1,122 @@
+@startuml
+!theme plain
+
+class UserController {
+    +create()
+    +store(Request)
+    +index(Request)
+    +edit(User)
+    +update(Request, User)
+    +destroy(User)
+    +exportPDF(Request)
+}
+class User {
+    +string name
+    +string email
+    +roles()
+    +workOrders()
+}
+class Role {
+    +string name
+}
+class VehiculoController {
+    +index(Request)
+    +create()
+    +store(StoreVehiculoRequest)
+    +edit(Vehiculo)
+    +update(UpdateVehiculoRequest, Vehiculo)
+    +destroy(Vehiculo)
+    +exportPDF(Request)
+}
+class Vehiculo {
+    +string patente
+    +string modelo
+    +int anio
+    +string estado
+    +workGroup()
+    +marca()
+}
+class MarcaVehiculo {
+    +string nombre
+    +vehiculos()
+}
+class EmployeeController {
+    +index(Request)
+    +create()
+    +store(StoreEmployeeRequest)
+    +edit(Employee)
+    +update(UpdateEmployeeRequest, Employee)
+    +destroy(Employee)
+    +exportPDF(Request)
+}
+class Employee {
+    +string nombre
+    +string apellido
+    +string dni
+    +string rol
+    +string estado
+    +workGroups()
+    +skills()
+}
+class Skill {
+    +string nombre
+    +employees()
+}
+class WorkGroupController {
+    +index(Request)
+    +create()
+    +store(StoreWorkGroupRequest)
+    +show(WorkGroup)
+    +edit(WorkGroup)
+    +update(UpdateWorkGroupRequest, WorkGroup)
+    +destroy(WorkGroup)
+    +exportPDF(Request)
+}
+class WorkGroup {
+    +string name
+    +vehiculo()
+    +employees()
+    +workOrders()
+}
+class WorkOrderController {
+    +index(Request)
+    +create()
+    +store(StoreWorkOrderRequest)
+    +show(WorkOrder)
+    +edit(WorkOrder)
+    +update(UpdateWorkOrderRequest, WorkOrder)
+    +changeEstado(Request, WorkOrder)
+    +exportPDF(Request)
+}
+class WorkOrder {
+    +string codigo
+    +string descripcion
+    +string estado
+    +string prioridad
+    +user()
+    +workGroup()
+}
+class Tarea {
+    +string nombre
+}
+
+UserController --> User
+User "1" -- "0..*" Role : uses
+VehiculoController --> Vehiculo
+Vehiculo "1" -- "1" MarcaVehiculo : belongs to
+MarcaVehiculo "1" -- "0..*" Vehiculo : has
+EmployeeController --> Employee
+Employee "0..*" -- "0..*" Skill : has
+Skill "0..*" -- "0..*" Employee : belongs to
+WorkGroupController --> WorkGroup
+WorkGroup "1" -- "0..1" Vehiculo : has
+Vehiculo "1" -- "0..1" WorkGroup : belongs to
+WorkGroup "0..*" -- "0..*" Employee : has
+Employee "0..*" -- "0..*" WorkGroup : belongs to
+WorkOrderController --> WorkOrder
+WorkOrder "0..*" -- "1" User : belongs to
+User "1" -- "0..*" WorkOrder : has
+WorkOrder "0..*" -- "1" WorkGroup : belongs to
+WorkGroup "1" -- "0..*" WorkOrder : has
+
+@enduml

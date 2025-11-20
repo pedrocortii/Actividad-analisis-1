@@ -8,22 +8,51 @@ use App\Http\Requests\StoreVehiculoRequest;
 use App\Http\Requests\UpdateVehiculoRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Models\MarcaVehiculo;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VehiculoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de todos los vehículos.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vehiculos = Vehiculo::all();
-        return view ('vehiculos.index', compact('vehiculos'));
+        if ($request->has('pdf')) {
+            return $this->exportPDF($request);
+        }
+
+        $query = Vehiculo::query();
+
+        if ($request->filled('marca_vehiculo_id')) {
+            $query->where('marca_vehiculo_id', $request->marca_vehiculo_id);
+        }
+
+        if ($request->filled('modelo')) {
+            $query->where('modelo', 'like', '%' . $request->modelo . '%');
+        }
+
+        if ($request->filled('año')) {
+            $query->where('año', $request->año);
+        }
+
+        if ($request->filled('estado')) {
+            // Convertir el valor del request a minúsculas y quitar espacios
+            $estadoFiltrado = strtolower(trim($request->input('estado')));
+            $query->whereRaw("REPLACE(LOWER(TRIM(estado)), ' ', '_') = ?", [$estadoFiltrado]);
+        }
+
+        $vehiculos = $query->paginate(10); // Paginación de 10 vehículos por página
+        $marcas = MarcaVehiculo::all(); // Obtener todas las marcas para el filtro
+
+        return view('vehiculos.index', compact('vehiculos', 'marcas'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo recurso.
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,11 +63,10 @@ class VehiculoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un recurso recién creado en el almacenamiento.
      *
      * @param  \App\Http\Requests\StoreVehiculoRequest  $request
      * @return \Illuminate\Http\Response
-     * use
      */
     public function store(StoreVehiculoRequest $request)
     {
@@ -63,7 +91,7 @@ class VehiculoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra el recurso especificado.
      *
      * @param  \App\Models\Vehiculo  $vehiculo
      * @return \Illuminate\Http\Response
@@ -74,7 +102,7 @@ class VehiculoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar el recurso especificado.
      *
      * @param  \App\Models\Vehiculo  $vehiculo
      * @return \Illuminate\Http\Response
@@ -87,7 +115,7 @@ class VehiculoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza el recurso especificado en el almacenamiento.
      *
      * @param  \App\Http\Requests\UpdateVehiculoRequest  $request
      * @param  \App\Models\Vehiculo  $vehiculo
@@ -108,7 +136,7 @@ class VehiculoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el recurso especificado del almacenamiento.
      *
      * @param  \App\Models\Vehiculo  $vehiculo
      * @return \Illuminate\Http\Response
@@ -118,5 +146,39 @@ class VehiculoController extends Controller
         $vehiculo->delete();
         return redirect()->route('vehiculos.index')
         ->with('success', 'Vehiculo eliminado exitosamente.');
+    }
+
+    /**
+     * Exporta los vehículos a un archivo PDF.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportPDF(Request $request)
+    {
+        $desde = $request->input('desde');
+        $hasta = $request->input('hasta');
+        $marca_vehiculo_id = $request->input('marca_vehiculo_id');
+        
+        $query = Vehiculo::with('marca');
+        
+        if ($desde && $hasta) {
+            $query->whereDate('created_at', '>=', $desde)
+                  ->whereDate('created_at', '<=', $hasta);
+        }
+        
+        if ($marca_vehiculo_id) {
+            $query->where('marca_vehiculo_id', $marca_vehiculo_id);
+            $marca = MarcaVehiculo::find($marca_vehiculo_id);
+        } else {
+            $marca = null;
+        }
+        
+        $vehiculos = $query->orderBy('created_at', 'desc')->get();
+        
+        $pdf = Pdf::loadView('vehiculos.pdf', compact('vehiculos', 'marca', 'desde', 'hasta'))
+                  ->setPaper('a4', 'landscape');
+        
+        return $pdf->download('vehiculos.pdf');
     }
 }

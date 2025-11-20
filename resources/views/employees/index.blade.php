@@ -1,88 +1,162 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid mt-4">
-    <div class="card border-0 shadow-sm rounded-3">
-        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top">
-            <h4 class="mb-0 fw-semibold">Empleados</h4>
-            @can('crear employees')
-            <a href="{{ route('employees.create') }}" class="btn btn-outline-light btn-sm">
-                <i class="fa-solid fa-plus"></i> Agregar empleado
-            </a>
-            @endcan
-        </div>
+<div class="container-fluid py-4">
+    
+    {{-- Encabezado principal --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-dark mb-0">
+            <i class="fa-solid fa-user-tie me-2 text-primary"></i> Empleados
+        </h3>
+        @can('crear employees')
+        <a href="{{ route('employees.create') }}" class="btn btn-primary rounded-pill shadow-sm px-3">
+            <i class="fa-solid fa-plus me-1"></i> Nuevo Empleado
+        </a>
+        @endcan
+    </div>
 
-        <div class="card-body bg-white">
-            <div class="row g-3">
-                @foreach($employees as $employee)
-                    <div class="col-md-4 col-lg-3">
-                        <div class="border rounded p-3 h-100 d-flex flex-column justify-content-between bg-light">
-                            <div>
-                                <h5 class="fw-semibold text-dark">{{ $employee->nombre }} {{ $employee->apellido }}</h5>
-                                <p class="mb-1"><strong>DNI:</strong> {{ $employee->dni }}</p>
-                                <p class="mb-1"><strong>Email:</strong> {{ $employee->email }}</p>
-                                <p class="mb-1"><strong>Tel:</strong> {{ $employee->telefono }}</p>
-                                <p class="mb-1"><strong>Rol:</strong> {{ $employee->rol }}</p>
-                                <p class="mb-1"><strong>Licencia:</strong> 
-                                    <span class="badge {{ $employee->licencia_conducir ? 'bg-success' : 'bg-secondary' }}">
-                                        {{ $employee->licencia_conducir ? 'Sí' : 'No' }}
-                                    </span>
-                                </p>
-                                <p class="mb-1"><strong>Estado:</strong> 
-                                    <span class="badge 
-                                        @if($employee->estado === 'activo') bg-success 
-                                        @elseif($employee->estado === 'inactivo') bg-danger 
-                                        @else bg-secondary @endif">
-                                        {{ ucfirst($employee->estado) }}
-                                    </span>
-                                </p>
-                                <p class="mb-1"><strong>Fecha de contratación:</strong> {{ $employee->fecha_contratacion }}</p>
-                                <p class="mb-1"><strong>Dirección:</strong> {{ $employee->direccion }}</p>
-                                @foreach($employee->skills as $skill)
-                                    <span class="badge bg-info text-dark">{{ $skill->nombre }}</span>
+    {{-- Formulario de Filtros --}}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white d-flex align-items-center">
+            <h5 class="mb-0 me-auto"><i class="fa-solid fa-filter me-2 text-primary"></i>Filtros de Búsqueda</h5>
+            <button class="btn btn-link shadow-none" type="button" data-toggle="collapse" data-target="#filtersCollapse" aria-expanded="true" aria-controls="filtersCollapse">
+                <i class="fa-solid fa-chevron-up"></i>
+            </button>        </div>
+        <div class="collapse show" id="filtersCollapse">
+            <div class="card-body">
+                <form action="{{ route('employees.index') }}" method="GET">
+                    <div class="row g-3">
+                        <div class="col-md-4 col-lg-3">
+                            <label for="nombre" class="form-label small fw-bold text-muted">Nombre</label>
+                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" value="{{ request('nombre') }}" placeholder="Buscar nombre">
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <label for="apellido" class="form-label small fw-bold text-muted">Apellido</label>
+                            <input type="text" class="form-control form-control-sm" id="apellido" name="apellido" value="{{ request('apellido') }}" placeholder="Buscar apellido">
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <label for="dni" class="form-label small fw-bold text-muted">DNI</label>
+                            <input type="text" class="form-control form-control-sm" id="dni" name="dni" value="{{ request('dni') }}" placeholder="Buscar DNI">
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <label for="estado" class="form-label small fw-bold text-muted">Estado</label>
+                            <select class="form-select form-select-sm" id="estado" name="estado">
+                                <option value="">Todos los Estados</option>
+                                <option value="activo" {{ request('estado') == 'activo' ? 'selected' : '' }}>Activo</option>
+                                <option value="inactivo" {{ request('estado') == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                            <label for="skill_id" class="form-label small fw-bold text-muted">Habilidad</label>
+                            <select class="form-select form-select-sm" id="skill_id" name="skill_id">
+                                <option value="">Todas las Habilidades</option>
+                                @foreach($skills as $skill)
+                                    <option value="{{ $skill->id }}" {{ request('skill_id') == $skill->id ? 'selected' : '' }}>
+                                        {{ $skill->nombre }}
+                                    </option>
                                 @endforeach
-                            </div>
-                            <div class="mt-3 d-flex gap-2">
-                                @can('editar employees')
-                                <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-outline-primary btn-sm flex-fill">
-                                    <i class="fa-solid fa-pen-to-square"></i> Editar
-                                </a>
-                                @endcan
-                                @can('eliminar employees')
-                                <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="flex-fill">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm w-100" onclick="return confirm('¿Estás seguro de eliminar este empleado?')">
-                                        <i class="fa-solid fa-trash"></i> Eliminar
-                                    </button>
-                                </form>
-                                @endcan
-                            </div>
+                            </select>
                         </div>
                     </div>
-                @endforeach
+
+                    {{-- Botones --}}
+                    <div class="row mt-4">
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-primary btn-sm rounded-pill px-4">
+                                <i class="fa-solid fa-magnifying-glass me-2"></i>Buscar
+                            </button>
+                            <a href="{{ route('employees.exportpdf', request()->query()) }}" class="btn btn-danger btn-sm rounded-pill px-4" target="_blank">
+                                <i class="fa-solid fa-file-pdf me-2"></i> PDF
+                            </a>
+                            <a href="{{ route('employees.index') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-4">
+                                <i class="fa-solid fa-rotate-left me-2"></i>Limpiar
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Tabla --}}
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body p-0">
+            @if (session('success'))
+                <div class="alert alert-success m-3" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light border-bottom border-2">
+                        <tr>
+                            <th>ID</th>
+                            <th>DNI</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Estado</th>
+                            <th>Habilidades</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($employees as $employee)
+                        <tr>
+                            <td class="text-muted">{{ $employee->id }}</td>
+                            <td class="fw-bold text-dark">{{ $employee->dni }}</td>
+                            <td>{{ $employee->nombre }} {{ $employee->apellido }}</td>
+                            <td>{{ $employee->email }}</td>
+                            <td>{{ $employee->telefono ?? 'N/A' }}</td>
+                            <td>
+                                @if($employee->estado == 'activo')
+                                    <span class="badge bg-success">Activo</span>
+                                @elseif($employee->estado == 'inactivo')
+                                    <span class="badge bg-secondary">Inactivo</span>
+                                @else
+                                    <span class="badge bg-secondary">{{ $employee->estado }}</span>
+                                @endif
+                            </td>
+                            <td>
+                                @forelse($employee->skills as $skill)
+                                    <span class="badge bg-primary mb-1">{{ $skill->nombre }}</span>
+                                @empty
+                                    <span class="text-muted fst-italic">Sin habilidades</span>
+                                @endforelse
+                            </td>
+                            <td class="text-center">
+                                <div class="d-inline-flex gap-1 flex-wrap justify-content-center">
+                                    @can('editar employees')
+                                    <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-sm btn-primary rounded-pill px-3" title="Editar">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    @endcan
+                                    @can('eliminar employees')
+                                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este empleado?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3" title="Eliminar">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center text-muted py-4">No se encontraron empleados.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3 p-3">
+                {{ $employees->appends(request()->input())->links() }}
             </div>
         </div>
     </div>
 </div>
 @endsection
-
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            console.log("jQuery listo!");
-        });
-    </script>
-@endpush
-
-@push('styles')
-<style>
-    .badge {
-        font-size: 0.8rem;
-        padding: 0.35em 0.55em;
-    }
-    .card h5 {
-        font-size: 1.05rem;
-    }
-</style>
-@endpush

@@ -6,11 +6,15 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
     /**
      * Muestra el formulario para crear un nuevo usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -21,6 +25,9 @@ class UserController extends Controller
 
     /**
      * Almacena un nuevo usuario en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -49,16 +56,43 @@ class UserController extends Controller
 
     /**
      * Muestra una lista de todos los usuarios.
-     * (Añadido para que la redirección del store() funcione)
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('roles')->paginate(10);
-        return view('users.index', compact('users'));
+        if ($request->has('pdf')) {
+            return $this->exportPDF($request);
+        }
+
+        $query = User::with('roles');
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        if ($request->filled('role')) {
+            $query->whereHas('roles', function ($q) use ($request) {
+                $q->where('name', $request->role);
+            });
+        }
+
+        $users = $query->paginate(10);
+        $roles = Role::all(); // Necesitamos los roles para el filtro en la vista
+
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
      * Muestra el formulario para editar un usuario existente.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
@@ -70,6 +104,10 @@ class UserController extends Controller
 
     /**
      * Actualiza un usuario existente en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
     {
@@ -98,6 +136,9 @@ class UserController extends Controller
 
     /**
      * Elimina un usuario existente de la base de datos.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
@@ -114,5 +155,37 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'Usuario eliminado exitosamente.');
+    }
+
+    /**
+     * Exporta los usuarios a un archivo PDF.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportPDF(Request $request)
+    {
+        $query = User::with('roles');
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        if ($request->filled('role')) {
+            $query->whereHas('roles', function ($q) use ($request) {
+                $q->where('name', $request->role);
+            });
+        }
+
+        $users = $query->get();
+        
+        $pdf = Pdf::loadView('users.pdf', compact('users'))
+                  ->setPaper('a4', 'landscape');
+        
+        return $pdf->download('users.pdf');
     }
 }

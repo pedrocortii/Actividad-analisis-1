@@ -12,7 +12,8 @@ class WorkGroup extends Model
     use HasFactory;
     protected $fillable = [
         'name', 
-        'vehiculo_id'
+        'vehiculo_id',
+        'status'
     ];
 
     public function vehiculo()
@@ -23,5 +24,13 @@ class WorkGroup extends Model
     public function employees()
     {
     return $this->belongsToMany(Employee::class, 'work_group_employees');
+    }
+    
+    public function activeWorkOrders()
+    {
+        return $this->hasMany(WorkOrder::class)
+            ->whereHas('status', function ($q) {
+                $q->whereIn('name', ['Pendiente', 'Asignado', 'Aceptado']);
+            });
     }   
 }

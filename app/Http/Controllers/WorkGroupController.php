@@ -6,21 +6,50 @@ use App\Models\WorkGroup;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkGroupRequest;
 use App\Http\Requests\UpdateWorkGroupRequest;
+use Illuminate\Http\Request; // Importar Request
+use App\Models\Vehiculo; // Importar Vehiculo
+use App\Models\Employee; // Importar Employee
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class WorkGroupController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de todos los grupos de trabajo.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    $workGroups = WorkGroup::with('employees')->paginate(10);
-    return view('work_groups.index', compact('workGroups'));
+        if ($request->has('pdf')) {
+            return $this->exportPDF($request);
+        }
+
+        $query = WorkGroup::with('employees', 'vehiculo');
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('vehiculo_id')) {
+            $query->where('vehiculo_id', $request->vehiculo_id);
+        }
+
+        if ($request->filled('employee_id')) {
+            $query->whereHas('employees', function ($q) use ($request) {
+                $q->where('employee_id', $request->employee_id);
+            });
+        }
+
+        $workGroups = $query->paginate(10);
+        $vehiculos = Vehiculo::all(); // Necesitamos los vehículos para el filtro en la vista
+        $employees = Employee::all(); // Necesitamos los empleados para el filtro en la vista
+
+        return view('work_groups.index', compact('workGroups', 'vehiculos', 'employees'));
     }
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo recurso.
      *
      * @return \Illuminate\Http\Response
      */
@@ -37,7 +66,7 @@ class WorkGroupController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un recurso recién creado en el almacenamiento.
      *
      * @param  \App\Http\Requests\StoreWorkGroupRequest  $request
      * @return \Illuminate\Http\Response
@@ -66,10 +95,19 @@ class WorkGroupController extends Controller
 
         $workGroup->employees()->attach($request->employee_ids ?? []);
         
+        // Actualizar estado del vehículo si fue asignado
+        if ($request->vehiculo_id) {
+            $vehiculo = Vehiculo::find($request->vehiculo_id);
+            if ($vehiculo) {
+                $vehiculo->estado = 'ocupado';
+                $vehiculo->save();
+            }
+        }
+
         return redirect()->route('work-groups.index')->with('success', 'Grupo de trabajo creado exitosamente.');
     }
     /**
-     * Display the specified resource.
+     * Muestra el recurso especificado.
      *
      * @param  \App\Models\WorkGroup  $workGroup
      * @return \Illuminate\Http\Response
@@ -84,7 +122,7 @@ class WorkGroupController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar el recurso especificado.
      *
      * @param  \App\Models\WorkGroup  $workGroup
      * @return \Illuminate\Http\Response
@@ -92,6 +130,9 @@ class WorkGroupController extends Controller
     public function edit(WorkGroup $workGroup)
     {
         
+        $gruposDisponibles = WorkGroup::withCount(['activeWorkOrders'])
+            ->having('active_work_orders_count', '<', 3)
+            ->get();
         $vehiculos = \App\Models\Vehiculo::with('marca')
             ->where(function($query) use ($workGroup) {
                 $query->where(function($subQuery) {
@@ -112,7 +153,7 @@ class WorkGroupController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza el recurso especificado en el almacenamiento.
      *
      * @param  \App\Http\Requests\UpdateWorkGroupRequest  $request
      * @param  \App\Models\WorkGroup  $workGroup
@@ -135,28 +176,86 @@ class WorkGroupController extends Controller
             }
         }
 
+        $oldVehiculoId = $workGroup->vehiculo_id; // Guardar el ID del vehículo anterior
+        
         $workGroup->update([
             'name' => $request->name,
             'vehiculo_id' => $request->vehiculo_id,
         ]);
-
-        
         
         $workGroup->employees()->sync($request->employee_ids ?? []);
         
+        // Lógica para actualizar el estado de los vehículos
+        if ($oldVehiculoId && $oldVehiculoId != $request->vehiculo_id) {
+            // Si se desasignó o cambió de vehículo, el anterior vuelve a disponible
+            $oldVehiculo = Vehiculo::find($oldVehiculoId);
+            if ($oldVehiculo) {
+                $oldVehiculo->estado = 'disponible';
+                $oldVehiculo->save();
+            }
+        }
+
+        if ($request->vehiculo_id) {
+            // Si se asignó un nuevo vehículo o se mantuvo el mismo, se marca como ocupado
+            $newVehiculo = Vehiculo::find($request->vehiculo_id);
+            if ($newVehiculo) {
+                $newVehiculo->estado = 'ocupado';
+                $newVehiculo->save();
+            }
+        }
 
         return redirect()->route('work-groups.index')->with('success', 'Grupo de trabajo actualizado exitosamente.');
     
     }
     /**
-     * Remove the specified resource from storage.
+     * Elimina el recurso especificado del almacenamiento.
      *
      * @param  \App\Models\WorkGroup  $workGroup
      * @return \Illuminate\Http\Response
      */
     public function destroy(WorkGroup $workGroup)
     {
+        // Antes de eliminar el grupo, si tiene un vehículo, ponerlo como disponible
+        if ($workGroup->vehiculo_id) {
+            $vehiculo = Vehiculo::find($workGroup->vehiculo_id);
+            if ($vehiculo) {
+                $vehiculo->estado = 'disponible';
+                $vehiculo->save();
+            }
+        }
         $workGroup->delete();
         return redirect()->route('work-groups.index')->with('success', 'Grupo de trabajo eliminado exitosamente.');
+    }
+
+    /**
+     * Exporta los grupos de trabajo a un archivo PDF.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportPDF(Request $request)
+    {
+        $query = WorkGroup::with('employees', 'vehiculo');
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('vehiculo_id')) {
+            $query->where('vehiculo_id', $request->vehiculo_id);
+        }
+
+        if ($request->filled('employee_id')) {
+            $query->whereHas('employees', function ($q) use ($request) {
+                $q->where('employee_id', $request->employee_id);
+            });
+        }
+
+        $workGroups = $query->get();
+        
+        $pdf = Pdf::loadView('work_groups.pdf', compact('workGroups'))
+                  ->setPaper('a4', 'landscape');
+        
+        return $pdf->download('work_groups.pdf');
     }
 }

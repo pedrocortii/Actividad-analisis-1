@@ -15,7 +15,7 @@ class User extends Authenticatable
     
     
     /**
-     * The attributes that are mass assignable.
+     * Los atributos que son asignables masivamente.
      *
      * @var array<int, string>
      */
@@ -26,7 +26,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Los atributos que deben ocultarse para la serialización.
      *
      * @var array<int, string>
      */
@@ -36,7 +36,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Los atributos que deben ser casteados.
      *
      * @var array<string, string>
      */
